@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 
 import '../repositories/shopping_list_repository.dart';
 
+/// This is the use case for getting updates on the shopping list
 class GetShoppingList {
   final ShoppingListRepository repository;
 

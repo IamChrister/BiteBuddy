@@ -3,6 +3,7 @@ import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart';
 import 'package:dartz/dartz.dart';
 
+/// This is the use case for updating the shopping list, including clearing it
 class UpdateShoppingList {
   final ShoppingListRepository repository;
 
