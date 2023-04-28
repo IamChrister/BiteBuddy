@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+  The main screen for interacting with the app
+*/
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
