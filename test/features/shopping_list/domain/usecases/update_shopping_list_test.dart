@@ -11,12 +11,12 @@ import 'update_shopping_list_test.mocks.dart';
 
 @GenerateMocks([ShoppingListRepository])
 void main() {
-  late UpdateShoppingList usecase;
-  late MockShoppingListRepository sut;
+  late UpdateShoppingList sut;
+  late MockShoppingListRepository shoppingListRepository;
 
   setUp(() {
-    sut = MockShoppingListRepository();
-    usecase = UpdateShoppingList(repository: sut);
+    shoppingListRepository = MockShoppingListRepository();
+    sut = UpdateShoppingList(repository: shoppingListRepository);
   });
 
   group('UpdateShoppingList', () {
@@ -26,17 +26,17 @@ void main() {
       const expected =
           ShoppingList(items: [ListItem(title: "title", collected: false)]);
 
-      when(sut.updateShoppingList(expected))
+      when(shoppingListRepository.updateShoppingList(expected))
           .thenAnswer((_) async => const Right(expected));
 
       // Act
-      final result = await usecase(expected);
+      final result = await sut(expected);
 
       // Assert
       result.fold((error) => fail("Expected Right value but got Left"),
-          (value) => expect(value, expected));
-      verify(sut.updateShoppingList(expected));
-      verifyNoMoreInteractions(sut);
+          (actual) => expect(actual, expected));
+      verify(shoppingListRepository.updateShoppingList(expected));
+      verifyNoMoreInteractions(shoppingListRepository);
     });
   });
 }

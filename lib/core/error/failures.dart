@@ -9,3 +9,9 @@ abstract class Failure extends Equatable {
   @override
   List<Object?> get props => properties;
 }
+
+class ServerFailure extends Failure {
+  final String message;
+
+  ServerFailure(this.message);
+}

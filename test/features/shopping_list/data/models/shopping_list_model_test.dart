@@ -32,10 +32,10 @@ void main() {
         ]);
 
         // Act
-        final result = ShoppingListModel.fromJson(jsonMap);
+        final actual = ShoppingListModel.fromJson(jsonMap);
 
         // Assert
-        expect(result, expected);
+        expect(actual, expected);
       });
       test(
           'should return a valid model when the JSON contains an empty shopping list',
@@ -47,10 +47,10 @@ void main() {
         final expected = ShoppingListModel(items: const []);
 
         // Act
-        final result = ShoppingListModel.fromJson(jsonMap);
+        final actual = ShoppingListModel.fromJson(jsonMap);
 
         // Assert
-        expect(result, expected);
+        expect(actual, expected);
       });
     });
 
@@ -70,10 +70,10 @@ void main() {
         };
 
         // Act
-        final result = tShoppingListModel.toJson();
+        final actual = tShoppingListModel.toJson();
 
         // Assert
-        expect(result, expected);
+        expect(actual, expected);
       });
     });
   });

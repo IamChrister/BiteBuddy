@@ -9,5 +9,6 @@ void main() {
     expect(tListItemModel, isA<ListItem>());
   });
 
-  //TODO: Should test the fromJson method even though it's somewhat covered in shopping_list_model_test.dart
+  //TODO: Should test the fromJson method even though it's covered in shopping_list_model_test.dart
+  //TODO: Should test the toJson method even though it's covered in shopping_list_model_test.dart
 }
