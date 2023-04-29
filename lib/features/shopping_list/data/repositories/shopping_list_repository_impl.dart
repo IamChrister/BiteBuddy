@@ -1,3 +1,4 @@
+import 'package:bite_buddy/core/error/exceptions.dart';
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/core/error/failures.dart';
@@ -11,15 +12,22 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   ShoppingListRepositoryImpl({required this.shoppingListDatasource});
 
   @override
-  Future<Either<Failure, ShoppingList>> getShoppingList() {
-    // TODO: implement getShoppingList
-    throw UnimplementedError();
+  Future<Either<Failure, ShoppingList>> getShoppingList() async {
+    try {
+      return Right(await shoppingListDatasource.getShoppingList());
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
   Future<Either<Failure, ShoppingList>> updateShoppingList(
-      ShoppingList shoppingList) {
-    // TODO: implement updateShoppingList
-    throw UnimplementedError();
+      ShoppingList shoppingList) async {
+    try {
+      return Right(
+          await shoppingListDatasource.updateShoppingList(shoppingList));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 }
