@@ -16,7 +16,6 @@ import 'shopping_list_datasource_test.mocks.dart';
 void main() {
   late ShoppingListDatasourceImpl sut;
   late MockClient mockClient;
-  String uri = "";
 
   setUp(() {
     mockClient = MockClient();
@@ -38,6 +37,9 @@ void main() {
 
   group('shoppingListDatasource', () {
     group('updateShoppingList', () {
+      var tShoppingListModel = ShoppingListModel.fromJson(
+          json.decode(fixture('shopping_list.json')));
+
       test(
           'should perform a PUT request to Firestore Realtime Database REST API is successful',
           () async {
@@ -45,8 +47,7 @@ void main() {
         setUpMockClientSuccess();
 
         // Act
-        await sut.updateShoppingList(ShoppingListModel.fromJson(
-            json.decode(fixture('shopping_list.json'))));
+        await sut.updateShoppingList(tShoppingListModel);
 
         // Assert
         verify(mockClient.put(Uri.parse(realtimeDatabaseUrl),
@@ -55,14 +56,12 @@ void main() {
       test('should return ShoppingListModel when the response code is 200',
           () async {
         // Arrange
-        final expected = ShoppingListModel.fromJson(
-            json.decode(fixture('shopping_list.json')));
+        final expected = tShoppingListModel;
 
         setUpMockClientSuccess();
 
         // Act
-        final actual = await sut.updateShoppingList(ShoppingListModel.fromJson(
-            json.decode(fixture('shopping_list.json'))));
+        final actual = await sut.updateShoppingList(tShoppingListModel);
 
         // Assert
         verify(mockClient.put(Uri.parse(realtimeDatabaseUrl),
