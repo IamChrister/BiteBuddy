@@ -2,7 +2,7 @@ import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.da
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 
 class ShoppingListModel extends ShoppingList {
-  ShoppingListModel({required List<ListItemModel> items}) : super(items: items);
+  const ShoppingListModel({required List<ListItemModel> items}) : super(items: items);
 
   // A factory to enable casting from JSON to ShoppingListModel
   factory ShoppingListModel.fromJson(Map<String, dynamic> json) {

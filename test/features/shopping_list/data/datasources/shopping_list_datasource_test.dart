@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/exceptions.dart';
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart';
 import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-
 import '../../../../fixtures/fixture_reader.dart';
 import 'shopping_list_datasource_test.mocks.dart';
 

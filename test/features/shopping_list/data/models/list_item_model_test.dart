@@ -3,7 +3,7 @@ import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tListItemModel = ListItemModel(title: "title", collected: false);
+  const tListItemModel = ListItemModel(title: "title", collected: false);
 
   test('should be a subclass of ListItem entity', () async {
     expect(tListItemModel, isA<ListItem>());

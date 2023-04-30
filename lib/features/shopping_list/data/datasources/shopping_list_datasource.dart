@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/exceptions.dart';
-import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/shopping_list_model.dart';
 
 abstract class ShoppingListDatasource {

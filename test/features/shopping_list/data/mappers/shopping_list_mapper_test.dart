@@ -4,7 +4,6 @@ import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_mode
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 
 void main() {
   group('ShoppingListMapper', () {
@@ -18,10 +17,10 @@ void main() {
         'should return a valid ShoppingListModel when given a ShoppingList entity',
         () {
       // Arrange
-      final expected = ShoppingListModel(
+      const expected = ShoppingListModel(
           items: [ListItemModel(title: "test item 1", collected: false)]);
 
-      final tShoppingListEntity = ShoppingList(
+      const tShoppingListEntity = ShoppingList(
           items: [ListItem(title: "test item 1", collected: false)]);
 
       // Act
