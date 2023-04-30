@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart'
     as _i3;
-import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart'
+import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -22,8 +22,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeShoppingList_0 extends _i1.SmartFake implements _i2.ShoppingList {
-  _FakeShoppingList_0(
+class _FakeShoppingListModel_0 extends _i1.SmartFake
+    implements _i2.ShoppingListModel {
+  _FakeShoppingListModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -42,33 +43,35 @@ class MockShoppingListDatasource extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.ShoppingList> getShoppingList() => (super.noSuchMethod(
+  _i4.Future<_i2.ShoppingListModel> getShoppingList() => (super.noSuchMethod(
         Invocation.method(
           #getShoppingList,
           [],
         ),
-        returnValue: _i4.Future<_i2.ShoppingList>.value(_FakeShoppingList_0(
+        returnValue:
+            _i4.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
           this,
           Invocation.method(
             #getShoppingList,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.ShoppingList>);
+      ) as _i4.Future<_i2.ShoppingListModel>);
   @override
-  _i4.Future<_i2.ShoppingList> updateShoppingList(
-          _i2.ShoppingList? shoppingList) =>
+  _i4.Future<_i2.ShoppingListModel> updateShoppingList(
+          _i2.ShoppingListModel? shoppingList) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateShoppingList,
           [shoppingList],
         ),
-        returnValue: _i4.Future<_i2.ShoppingList>.value(_FakeShoppingList_0(
+        returnValue:
+            _i4.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
           this,
           Invocation.method(
             #updateShoppingList,
             [shoppingList],
           ),
         )),
-      ) as _i4.Future<_i2.ShoppingList>);
+      ) as _i4.Future<_i2.ShoppingListModel>);
 }

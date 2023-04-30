@@ -1,5 +1,6 @@
 import 'package:bite_buddy/core/error/exceptions.dart';
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart';
+import 'package:bite_buddy/features/shopping_list/data/mappers/shopping_list_mapper.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart';
@@ -24,8 +25,8 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   Future<Either<Failure, ShoppingList>> updateShoppingList(
       ShoppingList shoppingList) async {
     try {
-      return Right(
-          await shoppingListDatasource.updateShoppingList(shoppingList));
+      return Right(await shoppingListDatasource.updateShoppingList(
+          ShoppingListMapper().entityToModel(shoppingList)));
     } on ServerException {
       return Left(ServerFailure());
     }
