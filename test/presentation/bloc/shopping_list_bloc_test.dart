@@ -44,6 +44,38 @@ void main() {
         inputConverter: mockInputConverter);
   });
 
+  void setUpGetShoppingListSuccess(ShoppingList tShoppingList) {
+    when(mockGetShoppingListUsecase())
+        .thenAnswer((realInvocation) async => Right(tShoppingList));
+  }
+
+  void setUpGetShoppingListFailure() {
+    when(mockGetShoppingListUsecase())
+        .thenAnswer((realInvocation) async => Left(ServerFailure()));
+  }
+
+  void setUpAddListItemToShoppingListFailure(
+      ShoppingList tEmptyShoppingList, String emptyName) {
+    when(mockAddListItemToShoppingListUsecase(tEmptyShoppingList, emptyName))
+        .thenReturn(Left(InvalidInputFailure()));
+  }
+
+  void setUpAddListItemToShoppingListSuccess(ShoppingList tEmptyShoppingList,
+      String tItemName, ShoppingList tShoppingList) {
+    when(mockAddListItemToShoppingListUsecase(tEmptyShoppingList, tItemName))
+        .thenReturn(Right(tShoppingList));
+  }
+
+  void setUpUpdateShoppingListFailure(ShoppingList tShoppingList) {
+    when(mockUpdateShoppingListUsecase(tShoppingList))
+        .thenAnswer((realInvocation) async => Left(ServerFailure()));
+  }
+
+  void setUpUpdateShoppingListSuccess(ShoppingList tShoppingList) {
+    when(mockUpdateShoppingListUsecase(tShoppingList))
+        .thenAnswer((realInvocation) async => Right(tShoppingList));
+  }
+
   group('ShoppingListBloc', () {
     const tItemName = "test item 1";
     const tEmptyShoppingList = ShoppingList(items: []);
@@ -59,8 +91,7 @@ void main() {
       blocTest('should emit [Loading, Loaded] when data is gotten successfully',
           build: () => sut,
           act: (bloc) async {
-            when(mockGetShoppingListUsecase()).thenAnswer(
-                (realInvocation) async => const Right(tShoppingList));
+            setUpGetShoppingListSuccess(tShoppingList);
 
             sut.add(GetShoppingListEvent());
           },
@@ -69,8 +100,7 @@ void main() {
       blocTest('should emit [Loading, Error] when getting data fails',
           build: () => sut,
           act: (bloc) async {
-            when(mockGetShoppingListUsecase())
-                .thenAnswer((realInvocation) async => Left(ServerFailure()));
+            setUpGetShoppingListFailure();
 
             sut.add(GetShoppingListEvent());
           },
@@ -85,9 +115,8 @@ void main() {
           build: () => sut,
           act: (bloc) {
             const emptyName = "   ";
-            when(mockAddListItemToShoppingListUsecase(
-                    tEmptyShoppingList, emptyName))
-                .thenReturn(Left(InvalidInputFailure()));
+            setUpAddListItemToShoppingListFailure(
+                tEmptyShoppingList, emptyName);
 
             // Act
             sut.add(AddItemToShoppingListEvent(emptyName, tEmptyShoppingList));
@@ -99,13 +128,11 @@ void main() {
           build: () => sut,
           act: (bloc) {
             // Adding is a success
-            when(mockAddListItemToShoppingListUsecase(
-                    tEmptyShoppingList, tItemName))
-                .thenReturn(Right(tShoppingList));
+            setUpAddListItemToShoppingListSuccess(
+                tEmptyShoppingList, tItemName, tShoppingList);
 
             // Updating the backend is a success
-            when(mockUpdateShoppingListUsecase(tShoppingList))
-                .thenAnswer((realInvocation) async => Right(tShoppingList));
+            setUpUpdateShoppingListSuccess(tShoppingList);
 
             // Act
             sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
@@ -122,9 +149,8 @@ void main() {
           'should emit [Error] when adding fails',
           build: () => sut,
           act: (bloc) {
-            // Adding the item is a success
-            when(mockAddListItemToShoppingListUsecase(tEmptyShoppingList, any))
-                .thenReturn(Left(InputFailure()));
+            // Adding the item is a failure
+            setUpAddListItemToShoppingListFailure(tEmptyShoppingList, "   ");
 
             // Act
             sut.add(AddItemToShoppingListEvent("   ", tEmptyShoppingList));
@@ -136,13 +162,11 @@ void main() {
           build: () => sut,
           act: (bloc) {
             // Adding the item is a success
-            when(mockAddListItemToShoppingListUsecase(
-                    tEmptyShoppingList, tItemName))
-                .thenReturn(Right(tShoppingList));
+            setUpAddListItemToShoppingListSuccess(
+                tEmptyShoppingList, tItemName, tShoppingList);
 
             // Updating the backend fails
-            when(mockUpdateShoppingListUsecase(tShoppingList))
-                .thenAnswer((realInvocation) async => Left(ServerFailure()));
+            setUpUpdateShoppingListFailure(tShoppingList);
 
             // Act
             sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
