@@ -13,6 +13,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'shopping_list_bloc_test.mocks.dart';
 
+// Here we're mostly testing if the states are emitted as expected
+
 @GenerateMocks([
   GetShoppingListUsecase,
   UpdateShoppingListUsecase,
@@ -52,18 +54,20 @@ void main() {
       expect(sut.initialState, Empty());
     });
 
+    //TODO: Test server error
     group('getShoppingList', () {
-      // blocTest('should emit [Loading, Loaded] when data is gotten successfully',
-      //     build: () => sut,
-      //     act: (bloc) async {
-      //       when(mockGetShoppingListUsecase()).thenAnswer(
-      //           (realInvocation) async => const Right(tShoppingList));
+      blocTest('should emit [Loading, Loaded] when data is gotten successfully',
+          build: () => sut,
+          act: (bloc) async {
+            when(mockGetShoppingListUsecase()).thenAnswer(
+                (realInvocation) async => const Right(tShoppingList));
 
-      //       sut.add(GetShoppingListEvent());
-      //     },
-      //     expect: () => [Loading(), Loaded(shoppingList: tShoppingList)]);
+            sut.add(GetShoppingListEvent());
+          },
+          expect: () => [Loading(), Loaded(shoppingList: tShoppingList)]);
     });
 
+    //TODO: Test server error
     group('addItemToShoppingList', () {
       // [] marks state
       blocTest<ShoppingListBloc, ShoppingListState>(

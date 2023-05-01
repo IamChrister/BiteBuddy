@@ -33,10 +33,10 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       GetShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     emit(Loading());
     final result = await getShoppingList();
-    // result.fold((error) => emit(Error(message: SERVER_FAILURE_MESSAGE)),
-    //     (shoppingList) {
-    //   emit(Loaded(shoppingList: shoppingList));
-    // });
+    result.fold((error) => emit(Error(message: SERVER_FAILURE_MESSAGE)),
+        (shoppingList) {
+      emit(Loaded(shoppingList: shoppingList));
+    });
   }
 
   /// Event that runs when an item is added to the shopping list
