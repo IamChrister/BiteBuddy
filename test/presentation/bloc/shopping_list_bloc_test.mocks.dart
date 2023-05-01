@@ -7,15 +7,13 @@ import 'dart:async' as _i6;
 
 import 'package:bite_buddy/core/error/failures.dart' as _i7;
 import 'package:bite_buddy/core/util/input_converter.dart' as _i4;
-import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart'
-    as _i12;
-import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart'
+import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart'
     as _i11;
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart'
     as _i8;
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart'
     as _i2;
-import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_model_to_shopping_list.dart'
+import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart'
     as _i10;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart'
     as _i5;
@@ -158,29 +156,29 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
         ),
       ) as _i4.InputConverter);
   @override
-  _i3.Either<_i7.Failure, _i11.ShoppingListModel> call(
-    _i11.ShoppingListModel? shoppingListModel,
+  _i3.Either<_i7.Failure, _i8.ShoppingList> call(
+    _i8.ShoppingList? shoppingList,
     String? itemString,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [
-            shoppingListModel,
+            shoppingList,
             itemString,
           ],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i11.ShoppingListModel>(
+        returnValue: _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
           this,
           Invocation.method(
             #call,
             [
-              shoppingListModel,
+              shoppingList,
               itemString,
             ],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i11.ShoppingListModel>);
+      ) as _i3.Either<_i7.Failure, _i8.ShoppingList>);
 }
 
 /// A class which mocks [InputConverter].
@@ -192,18 +190,18 @@ class MockInputConverter extends _i1.Mock implements _i4.InputConverter {
   }
 
   @override
-  _i3.Either<_i7.Failure, _i12.ListItemModel> stringToListItem(String? str) =>
+  _i3.Either<_i7.Failure, _i11.ListItem> stringToListItem(String? str) =>
       (super.noSuchMethod(
         Invocation.method(
           #stringToListItem,
           [str],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i12.ListItemModel>(
+        returnValue: _FakeEither_1<_i7.Failure, _i11.ListItem>(
           this,
           Invocation.method(
             #stringToListItem,
             [str],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i12.ListItemModel>);
+      ) as _i3.Either<_i7.Failure, _i11.ListItem>);
 }

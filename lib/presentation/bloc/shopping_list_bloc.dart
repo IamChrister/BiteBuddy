@@ -1,7 +1,7 @@
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
-import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_model_to_shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart';
 import 'package:bloc/bloc.dart';
@@ -9,8 +9,6 @@ import 'package:equatable/equatable.dart';
 
 part 'shopping_list_event.dart';
 part 'shopping_list_state.dart';
-
-const INVALID_INPUT_FAILURE_MESSAGE = "Name of the item should not be empty.";
 
 class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final GetShoppingListUsecase getShoppingList;
@@ -45,8 +43,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     // Run the usecase itself
-    final result =
-        addItemToShoppingList(event.shoppingListModel, event.newItem);
+    final result = addItemToShoppingList(event.shoppingList, event.newItem);
 
     // Deal with the result
     result.fold((failure) {

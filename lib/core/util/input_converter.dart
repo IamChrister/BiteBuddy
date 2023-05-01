@@ -1,15 +1,15 @@
 import 'package:bite_buddy/core/error/failures.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:dartz/dartz.dart';
 
 class InputConverter {
-  Either<Failure, ListItemModel> stringToListItem(String str) {
+  Either<Failure, ListItem> stringToListItem(String str) {
     String formattedInput = str.trim();
 
     if (formattedInput.isEmpty) {
       return Left(InvalidInputFailure());
     } else {
-      return Right(ListItemModel(title: formattedInput, collected: false));
+      return Right(ListItem(title: formattedInput, collected: false));
     }
   }
 }

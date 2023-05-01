@@ -1,5 +1,5 @@
 import 'package:bite_buddy/core/util/input_converter.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,7 +11,7 @@ void main() {
   });
 
   group('inputConverter', () {
-    test('should return a ListItemModel when the string is not empty', () {
+    test('should return a ListItem when the string is not empty', () {
       // Arrange
       final str = 'milk';
 
@@ -20,7 +20,7 @@ void main() {
 
       // Assert
       result.fold((error) => fail('Got Left but was expecting Right'),
-          (actual) => expect(actual, isA<ListItemModel>()));
+          (actual) => expect(actual, isA<ListItem>()));
     });
 
     test('should return a Failure when the string is empty', () {

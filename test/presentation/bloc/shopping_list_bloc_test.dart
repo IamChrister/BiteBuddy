@@ -1,7 +1,8 @@
+import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart';
-import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
-import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_model_to_shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
@@ -42,9 +43,9 @@ void main() {
 
   group('ShoppingListBloc', () {
     const tItemName = "test item 1";
-    const tEmptyShoppingList = ShoppingListModel(items: []);
-    const tShoppingListModel = ShoppingListModel(
-        items: [ListItemModel(title: "test item 1", collected: false)]);
+    const tEmptyShoppingList = ShoppingList(items: []);
+    const tShoppingList =
+        ShoppingList(items: [ListItem(title: "test item 1", collected: false)]);
 
     test('should emit initialState & initialState should be Empty', () {
       // Assert
@@ -56,11 +57,11 @@ void main() {
       //     build: () => sut,
       //     act: (bloc) async {
       //       when(mockGetShoppingListUsecase()).thenAnswer(
-      //           (realInvocation) async => const Right(tShoppingListModel));
+      //           (realInvocation) async => const Right(tShoppingList));
 
       //       sut.add(GetShoppingListEvent());
       //     },
-      //     expect: () => [Loading(), Loaded(shoppingList: tShoppingListModel)]);
+      //     expect: () => [Loading(), Loaded(shoppingList: tShoppingList)]);
     });
 
     group('addItemToShoppingList', () {
@@ -85,7 +86,7 @@ void main() {
           act: (bloc) {
             when(mockAddListItemToShoppingListUsecase(
                     tEmptyShoppingList, tItemName))
-                .thenReturn(Right(tShoppingListModel));
+                .thenReturn(Right(tShoppingList));
 
             // Act
             sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));

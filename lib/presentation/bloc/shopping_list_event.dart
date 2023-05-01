@@ -12,15 +12,15 @@ class GetShoppingListEvent extends ShoppingListEvent {
 }
 
 class UpdateShoppingListEvent extends ShoppingListEvent {
-  final ShoppingListModel shoppingListModel;
+  final ShoppingList shoppingList;
 
-  UpdateShoppingListEvent(this.shoppingListModel) : super([shoppingListModel]);
+  UpdateShoppingListEvent(this.shoppingList) : super([shoppingList]);
 }
 
 class AddItemToShoppingListEvent extends ShoppingListEvent {
   final String newItem;
-  final ShoppingListModel shoppingListModel;
+  final ShoppingList shoppingList;
 
-  AddItemToShoppingListEvent(this.newItem, this.shoppingListModel)
-      : super([shoppingListModel, newItem]);
+  AddItemToShoppingListEvent(this.newItem, this.shoppingList)
+      : super([shoppingList, newItem]);
 }

@@ -4,8 +4,8 @@ import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_l
 import 'package:dartz/dartz.dart';
 
 /// This is the use case for updating the shopping list, including clearing it
-/// Takes as input a ShoppingListModel
-/// Calls on the repository with the given model
+/// Takes as input a ShoppingList
+/// Calls on the repository with the given shoppingList
 /// Repository updates the server state
 class UpdateShoppingListUsecase {
   final ShoppingListRepository repository;

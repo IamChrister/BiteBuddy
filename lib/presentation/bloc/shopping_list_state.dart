@@ -16,7 +16,7 @@ class Loading extends ShoppingListState {
 }
 
 class Loaded extends ShoppingListState {
-  final ShoppingListModel shoppingList;
+  final ShoppingList shoppingList;
 
   Loaded({required this.shoppingList}) : super([shoppingList]);
 }
