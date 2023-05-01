@@ -1,4 +1,5 @@
 import 'package:bite_buddy/core/constants.dart';
+import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
@@ -54,7 +55,6 @@ void main() {
       expect(sut.initialState, Empty());
     });
 
-    //TODO: Test server error
     group('getShoppingList', () {
       blocTest('should emit [Loading, Loaded] when data is gotten successfully',
           build: () => sut,
@@ -65,6 +65,16 @@ void main() {
             sut.add(GetShoppingListEvent());
           },
           expect: () => [Loading(), Loaded(shoppingList: tShoppingList)]);
+
+      blocTest('should emit [Loading, Error] when getting data fails',
+          build: () => sut,
+          act: (bloc) async {
+            when(mockGetShoppingListUsecase())
+                .thenAnswer((realInvocation) async => Left(ServerFailure()));
+
+            sut.add(GetShoppingListEvent());
+          },
+          expect: () => [Loading(), Error(message: SERVER_FAILURE_MESSAGE)]);
     });
 
     //TODO: Test server error
@@ -85,19 +95,63 @@ void main() {
           expect: () => [Error(message: INVALID_INPUT_FAILURE_MESSAGE)]);
 
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [Updated] when an item is added',
+          'should emit [Added, Loading, Updated] when an item is added correctly',
           build: () => sut,
           act: (bloc) {
+            // Adding is a success
             when(mockAddListItemToShoppingListUsecase(
                     tEmptyShoppingList, tItemName))
                 .thenReturn(Right(tShoppingList));
 
+            // Updating the backend is a success
+            when(mockUpdateShoppingListUsecase(tShoppingList))
+                .thenAnswer((realInvocation) async => Right(tShoppingList));
+
             // Act
             sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
           },
-          expect: () => [Updated()],
+          expect: () => [
+                Added(shoppingList: tShoppingList),
+                Loading(),
+                Updated(shoppingList: tShoppingList)
+              ],
           verify: (sut) => verify(mockAddListItemToShoppingListUsecase(
               tEmptyShoppingList, tItemName)));
+
+      blocTest<ShoppingListBloc, ShoppingListState>(
+          'should emit [Error] when adding fails',
+          build: () => sut,
+          act: (bloc) {
+            // Adding the item is a success
+            when(mockAddListItemToShoppingListUsecase(tEmptyShoppingList, any))
+                .thenReturn(Left(InputFailure()));
+
+            // Act
+            sut.add(AddItemToShoppingListEvent("   ", tEmptyShoppingList));
+          },
+          expect: () => [Error(message: INVALID_INPUT_FAILURE_MESSAGE)]);
+
+      blocTest<ShoppingListBloc, ShoppingListState>(
+          'should emit [Added, Loading, Error] when overwriting the server data fails',
+          build: () => sut,
+          act: (bloc) {
+            // Adding the item is a success
+            when(mockAddListItemToShoppingListUsecase(
+                    tEmptyShoppingList, tItemName))
+                .thenReturn(Right(tShoppingList));
+
+            // Updating the backend fails
+            when(mockUpdateShoppingListUsecase(tShoppingList))
+                .thenAnswer((realInvocation) async => Left(ServerFailure()));
+
+            // Act
+            sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
+          },
+          expect: () => [
+                Added(shoppingList: tShoppingList),
+                Loading(),
+                Error(message: SERVER_FAILURE_MESSAGE)
+              ]);
     });
   });
 }

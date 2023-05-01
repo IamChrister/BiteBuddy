@@ -16,6 +16,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final AddListItemToShoppingListUsecase addItemToShoppingList;
   final InputConverter inputConverter;
 
+// TODO: Implement updating of the shopping list
   ShoppingListBloc(
       {required this.getShoppingList,
       required this.updateShoppingList,
@@ -48,8 +49,17 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     // Deal with the result
     result.fold((failure) {
       emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
-    }, (result) {
-      emit(Updated());
+    }, (result) async {
+      emit(Added(shoppingList: result));
+
+      //Call the backend update
+      emit(Loading());
+      final updated = await updateShoppingList(result);
+
+      updated.fold((error) => emit(Error(message: SERVER_FAILURE_MESSAGE)),
+          (newShoppingList) {
+        emit(Updated(shoppingList: newShoppingList));
+      });
     });
   }
 }
