@@ -26,3 +26,7 @@ class Error extends ShoppingListState {
 
   Error({required this.message}) : super([message]);
 }
+
+class Updated extends ShoppingListState {
+  Updated() : super([]);
+}

@@ -1,3 +1,4 @@
+import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
 import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_model_to_shopping_list.dart';
@@ -24,21 +25,34 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       required this.inputConverter})
       : super(Empty()) {
     on<AddItemToShoppingListEvent>(_onAddItemToShoppingListEvent);
+    on<GetShoppingListEvent>(_onGetShoppingListEvent);
   }
 
   @override
   ShoppingListState get initialState => Empty();
 
+  Future<void> _onGetShoppingListEvent(
+      GetShoppingListEvent event, Emitter<ShoppingListState> emit) async {
+    emit(Loading());
+    final result = await getShoppingList();
+    // result.fold((error) => emit(Error(message: SERVER_FAILURE_MESSAGE)),
+    //     (shoppingList) {
+    //   emit(Loaded(shoppingList: shoppingList));
+    // });
+  }
+
+  /// Event that runs when an item is added to the shopping list
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
-    //TODO: Continue here
+    // Run the usecase itself
+    final result =
+        addItemToShoppingList(event.shoppingListModel, event.newItem);
 
-    final inputEither = inputConverter.stringToListItem(event.newItem);
-
-    inputEither.fold((failure) {
+    // Deal with the result
+    result.fold((failure) {
       emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
     }, (result) {
-      emit(throw UnimplementedError());
+      emit(Updated());
     });
   }
 }

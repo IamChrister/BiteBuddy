@@ -26,18 +26,6 @@ void main() {
         const ListItemModel(title: "test item 1", collected: false);
     String newItemName = "test item 1";
 
-    test('should call the inputConverter to convert the input', () {
-      // Arrange
-      when(mockInputConverter.stringToListItem(any))
-          .thenAnswer((realInvocation) => Right(tListItemModel));
-
-      // Act
-      sut.call(tShoppingListModel, newItemName);
-
-      // Assert
-      verify(mockInputConverter.stringToListItem(newItemName));
-    });
-
     test('should add a new item to the shoppingListModel', () {
       // Arrange
       ShoppingListModel expected = ShoppingListModel(items: [tListItemModel]);
@@ -55,7 +43,7 @@ void main() {
 
     test('should return a failure if the name of the item is empty', () {
       // Arrange
-      final emptyName = '  ';
+      const emptyName = '  ';
       when(mockInputConverter.stringToListItem(any))
           .thenAnswer((realInvocation) => Left(InvalidInputFailure()));
 

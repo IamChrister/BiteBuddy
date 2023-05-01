@@ -41,8 +41,8 @@ void main() {
   });
 
   group('ShoppingListBloc', () {
-    const tListItemModel =
-        ListItemModel(title: "test item 1", collected: false);
+    const tItemName = "test item 1";
+    const tEmptyShoppingList = ShoppingListModel(items: []);
     const tShoppingListModel = ShoppingListModel(
         items: [ListItemModel(title: "test item 1", collected: false)]);
 
@@ -52,48 +52,47 @@ void main() {
     });
 
     group('getShoppingList', () {
-      test('should ', () {
-        // Arrange
+      // blocTest('should emit [Loading, Loaded] when data is gotten successfully',
+      //     build: () => sut,
+      //     act: (bloc) async {
+      //       when(mockGetShoppingListUsecase()).thenAnswer(
+      //           (realInvocation) async => const Right(tShoppingListModel));
 
-        // Act
-
-        // Assert
-      });
+      //       sut.add(GetShoppingListEvent());
+      //     },
+      //     expect: () => [Loading(), Loaded(shoppingList: tShoppingListModel)]);
     });
 
     group('addItemToShoppingList', () {
-      // Mimic what's coming in from the UI
-      const itemString = 'Milk';
-
-      //TODO: Delete this since implemented elsewhere?
-      test(
-          'should call the InputConverter to convert the string to a ListItemModel',
-          () async {
-        // Arrange
-        when(mockInputConverter.stringToListItem(any))
-            .thenReturn(const Right(tListItemModel));
-
-        // Act
-        sut.add(AddItemToShoppingListEvent("Test item", tShoppingListModel));
-        await untilCalled(mockInputConverter.stringToListItem(any));
-
-        // Assert
-        verify(mockInputConverter.stringToListItem("Test item"));
-      });
-
       // [] marks state
       blocTest<ShoppingListBloc, ShoppingListState>(
           'should emit [Error] when the input is invalid',
           build: () => sut,
           act: (bloc) {
-            when(mockInputConverter.stringToListItem(any))
+            const emptyName = "   ";
+            when(mockAddListItemToShoppingListUsecase(
+                    tEmptyShoppingList, emptyName))
                 .thenReturn(Left(InvalidInputFailure()));
 
             // Act
-            sut.add(
-                AddItemToShoppingListEvent("Test item", tShoppingListModel));
+            sut.add(AddItemToShoppingListEvent(emptyName, tEmptyShoppingList));
           },
           expect: () => [Error(message: INVALID_INPUT_FAILURE_MESSAGE)]);
+
+      blocTest<ShoppingListBloc, ShoppingListState>(
+          'should emit [Updated] when an item is added',
+          build: () => sut,
+          act: (bloc) {
+            when(mockAddListItemToShoppingListUsecase(
+                    tEmptyShoppingList, tItemName))
+                .thenReturn(Right(tShoppingListModel));
+
+            // Act
+            sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
+          },
+          expect: () => [Updated()],
+          verify: (sut) => verify(mockAddListItemToShoppingListUsecase(
+              tEmptyShoppingList, tItemName)));
     });
   });
 }
