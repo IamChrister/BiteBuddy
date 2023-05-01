@@ -4,10 +4,10 @@ import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_l
 import 'package:dartz/dartz.dart';
 
 /// This is the use case for updating the shopping list, including clearing it
-class UpdateShoppingList {
+class UpdateShoppingListUsecase {
   final ShoppingListRepository repository;
 
-  UpdateShoppingList({required this.repository});
+  UpdateShoppingListUsecase({required this.repository});
 
   Future<Either<Failure, ShoppingList>> call(ShoppingList shoppingList) async {
     return await repository.updateShoppingList(shoppingList);

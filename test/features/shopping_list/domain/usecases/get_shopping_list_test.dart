@@ -11,12 +11,12 @@ import 'get_shopping_list_test.mocks.dart';
 
 @GenerateMocks([ShoppingListRepository])
 void main() {
-  late GetShoppingList sut;
+  late GetShoppingListUsecase sut;
   late MockShoppingListRepository shoppingListRepository;
 
   setUp(() {
     shoppingListRepository = MockShoppingListRepository();
-    sut = GetShoppingList(repository: shoppingListRepository);
+    sut = GetShoppingListUsecase(repository: shoppingListRepository);
   });
 
   group('GetShoppingList', () {

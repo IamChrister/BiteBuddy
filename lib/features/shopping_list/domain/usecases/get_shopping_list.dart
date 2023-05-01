@@ -5,10 +5,10 @@ import 'package:dartz/dartz.dart';
 import '../repositories/shopping_list_repository.dart';
 
 /// This is the use case for getting updates on the shopping list
-class GetShoppingList {
+class GetShoppingListUsecase {
   final ShoppingListRepository repository;
 
-  GetShoppingList({required this.repository});
+  GetShoppingListUsecase({required this.repository});
 
   Future<Either<Failure, ShoppingList>> call() async {
     return await repository.getShoppingList();
