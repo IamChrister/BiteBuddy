@@ -23,7 +23,7 @@ void main() {
           'should return a valid model when the JSON contains a non-empty shopping list',
           () async {
         // Arrange
-        final Map<String, dynamic> jsonMap =
+        final List<dynamic> jsonMap =
             json.decode(fixture('shopping_list.json'));
 
         var expected = ShoppingListModel(items: [
@@ -41,7 +41,7 @@ void main() {
           'should return a valid model when the JSON contains an empty shopping list',
           () async {
         // Arrange
-        final Map<String, dynamic> jsonMap =
+        final List<dynamic> jsonMap =
             json.decode(fixture('shopping_list_empty.json'));
 
         const expected = ShoppingListModel(items: []);

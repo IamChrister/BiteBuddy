@@ -6,11 +6,11 @@ class ShoppingListModel extends ShoppingList {
       : super(items: items);
 
   // A factory to enable casting from JSON to ShoppingListModel
-  factory ShoppingListModel.fromJson(Map<String, dynamic> json) {
+  factory ShoppingListModel.fromJson(List<dynamic> json) {
     // Since ListItemModel also requires conversion from JSON we need to map over each item and run .fromJson on each one.
-    var itemsFromJson = json['items'] as List;
+
     List<ListItemModel> items =
-        itemsFromJson.map((item) => ListItemModel.fromJson(item)).toList();
+        json.map((item) => ListItemModel.fromJson(item)).toList();
     return ShoppingListModel(items: items);
   }
 

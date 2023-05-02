@@ -1,12 +1,10 @@
-{
-    "items": [
-        {
-            "title": "test item 1",
-            "collected": false
-        },
-        {
-            "title": "test item 2",
-            "collected": true
-        }
-    ]
-}
+[
+    {
+        "collected": false,
+        "title": "test item 1"
+    },
+    {
+        "collected": true,
+        "title": "test item 2"
+    }
+]
