@@ -1,6 +1,8 @@
+import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddListItemWidget extends StatefulWidget {
   const AddListItemWidget({super.key});
@@ -14,9 +16,10 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   String inputStr = "";
 
   void _addItem(String title) {
-    //TODO: Implement
     print("Adding new item: $title");
     _textEditingController.clear();
+    BlocProvider.of<ShoppingListBloc>(context)
+        .add(AddItemToShoppingListEvent(title));
   }
 
   @override

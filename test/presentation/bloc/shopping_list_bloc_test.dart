@@ -54,9 +54,8 @@ void main() {
         .thenAnswer((realInvocation) async => Left(ServerFailure()));
   }
 
-  void setUpAddListItemToShoppingListFailure(
-      ShoppingList tEmptyShoppingList, String emptyName) {
-    when(mockAddListItemToShoppingListUsecase(tEmptyShoppingList, emptyName))
+  void setUpAddListItemToShoppingListFailure() {
+    when(mockAddListItemToShoppingListUsecase(any, any))
         .thenReturn(Left(InvalidInputFailure()));
   }
 
@@ -84,7 +83,7 @@ void main() {
 
     test('should emit initialState & initialState should be Empty', () {
       // Assert
-      expect(sut.initialState, Empty());
+      expect(sut.initialState, ShoppingListInitial());
     });
 
     group('getShoppingList', () {
@@ -95,7 +94,10 @@ void main() {
 
             sut.add(GetShoppingListEvent());
           },
-          expect: () => [Loading(), Loaded(shoppingList: tShoppingList)]);
+          expect: () => [
+                ShoppingListLoading(),
+                ShoppingListLoaded(shoppingList: tShoppingList)
+              ]);
 
       blocTest('should emit [Loading, Error] when getting data fails',
           build: () => sut,
@@ -104,27 +106,31 @@ void main() {
 
             sut.add(GetShoppingListEvent());
           },
-          expect: () => [Loading(), Error(message: SERVER_FAILURE_MESSAGE)]);
+          expect: () => [
+                ShoppingListLoading(),
+                ShoppingListError(message: SERVER_FAILURE_MESSAGE)
+              ]);
     });
 
     //TODO: Test server error
     group('addItemToShoppingList', () {
       // [] marks state
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [Error] when the input is invalid',
+          'should emit [ShoppingListError] when the input is invalid',
           build: () => sut,
           act: (bloc) {
             const emptyName = "   ";
-            setUpAddListItemToShoppingListFailure(
-                tEmptyShoppingList, emptyName);
+            setUpAddListItemToShoppingListFailure();
 
             // Act
-            sut.add(AddItemToShoppingListEvent(emptyName, tEmptyShoppingList));
+            sut.add(AddItemToShoppingListEvent(emptyName));
           },
-          expect: () => [Error(message: INVALID_INPUT_FAILURE_MESSAGE)]);
+          expect: () =>
+              [ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE)]);
 
+      //TODO: Will it get loaded again after adding??
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [Added, Loading, Updated] when an item is added correctly',
+          'should emit [ShoppingListLoading] when an item is added correctly',
           build: () => sut,
           act: (bloc) {
             // Adding is a success
@@ -135,30 +141,29 @@ void main() {
             setUpUpdateShoppingListSuccess(tShoppingList);
 
             // Act
-            sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
+            sut.add(AddItemToShoppingListEvent(tItemName));
           },
           expect: () => [
-                Added(shoppingList: tShoppingList),
-                Loading(),
-                Updated(shoppingList: tShoppingList)
+                ShoppingListLoading(),
               ],
           verify: (sut) => verify(mockAddListItemToShoppingListUsecase(
               tEmptyShoppingList, tItemName)));
 
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [Error] when adding fails',
+          'should emit [ShoppingListError] when adding fails',
           build: () => sut,
           act: (bloc) {
             // Adding the item is a failure
-            setUpAddListItemToShoppingListFailure(tEmptyShoppingList, "   ");
+            setUpAddListItemToShoppingListFailure();
 
             // Act
-            sut.add(AddItemToShoppingListEvent("   ", tEmptyShoppingList));
+            sut.add(AddItemToShoppingListEvent("   "));
           },
-          expect: () => [Error(message: INVALID_INPUT_FAILURE_MESSAGE)]);
+          expect: () =>
+              [ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE)]);
 
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [Added, Loading, Error] when overwriting the server data fails',
+          'should emit [ShoppingListLoading, ShoppingListError] when overwriting the server data fails',
           build: () => sut,
           act: (bloc) {
             // Adding the item is a success
@@ -169,12 +174,11 @@ void main() {
             setUpUpdateShoppingListFailure(tShoppingList);
 
             // Act
-            sut.add(AddItemToShoppingListEvent(tItemName, tEmptyShoppingList));
+            sut.add(AddItemToShoppingListEvent(tItemName));
           },
           expect: () => [
-                Added(shoppingList: tShoppingList),
-                Loading(),
-                Error(message: SERVER_FAILURE_MESSAGE)
+                ShoppingListLoading(),
+                ShoppingListError(message: SERVER_FAILURE_MESSAGE)
               ]);
     });
   });

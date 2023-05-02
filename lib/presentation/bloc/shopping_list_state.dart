@@ -7,39 +7,29 @@ abstract class ShoppingListState extends Equatable {
   List<Object> get props => [];
 }
 
+/// Finished loading - This keeps the state of the shoppingList
+class ShoppingListLoaded extends ShoppingListState {
+  final ShoppingList shoppingList;
+
+  ShoppingListLoaded({required this.shoppingList}) : super([shoppingList]);
+
+  @override
+  List<Object> get props => [shoppingList];
+}
+
 /// Initial state
-class Empty extends ShoppingListState {
-  Empty() : super([]);
+class ShoppingListInitial extends ShoppingListState {
+  ShoppingListInitial() : super([]);
 }
 
 /// Loading something
-class Loading extends ShoppingListState {
-  Loading() : super([]);
-}
-
-/// Finished loading
-class Loaded extends ShoppingListState {
-  final ShoppingList shoppingList;
-
-  Loaded({required this.shoppingList}) : super([shoppingList]);
+class ShoppingListLoading extends ShoppingListState {
+  ShoppingListLoading() : super([]);
 }
 
 /// Error
-class Error extends ShoppingListState {
+class ShoppingListError extends ShoppingListState {
   final String message;
 
-  Error({required this.message}) : super([message]);
-}
-
-/// Item added by the user, not yet updated in the server
-class Added extends ShoppingListState {
-  final ShoppingList shoppingList;
-
-  Added({required this.shoppingList}) : super([shoppingList]);
-}
-
-/// Server update happened
-class Updated extends ShoppingListState {
-  final ShoppingList shoppingList;
-  Updated({required this.shoppingList}) : super([shoppingList]);
+  ShoppingListError({required this.message}) : super([message]);
 }

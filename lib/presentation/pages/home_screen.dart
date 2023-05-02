@@ -9,52 +9,81 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /*
   The main screen for interacting with the shopping list
 */
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Bite Buddy")),
       body: BlocProvider(
         create: (context) => sl<ShoppingListBloc>(),
-        child: buildBody(),
+        child: HomeBody(),
       ),
     );
   }
+}
 
-  Padding buildBody() {
+class HomeBody extends StatefulWidget {
+  const HomeBody({
+    super.key,
+  });
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+  void dispatchGetShoppingList() {
+    BlocProvider.of<ShoppingListBloc>(context).add(GetShoppingListEvent());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          // List display area
-          Expanded(
-            child: BlocBuilder<ShoppingListBloc, ShoppingListState>(
-              // Here is how we get access to the bloc
-              builder: (context, state) {
-                if (state is Loading) {
-                  return const Placeholder(
-                    child: Text('Empty state'),
-                  );
-                }
-
-                return ShoppingListWidget(
-                  items: [
-                    ListItem(title: "item 1", collected: true),
-                    ListItem(title: "item 2", collected: false),
-                    ListItem(title: "item 3", collected: false)
-                  ],
-                  onDelete: () {
-                    print("Delete item");
-                  },
-                );
-              },
-            ),
-          ),
-          AddListItemWidget()
-        ],
-      ),
+      child: Column(children: [
+        // List display area
+        BlocBuilder<ShoppingListBloc, ShoppingListState>(
+          // Here is how we get access to the bloc
+          builder: (context, state) {
+            if (state is ShoppingListInitial) {
+              return Expanded(
+                  child: Placeholder(
+                child: TextButton(
+                  onPressed: dispatchGetShoppingList,
+                  child: Text("Get shopping list"),
+                ),
+              ));
+            } else if (state is ShoppingListLoaded) {
+              return ShoppingListWidget(
+                items: state.shoppingList.items,
+                onDelete: () {
+                  print("Delete item");
+                },
+              );
+            } else if (state is ShoppingListLoading) {
+              return const Placeholder(
+                child: Text('Loading state'),
+              );
+            } else if (state is ShoppingListError) {
+              return const Placeholder(
+                child: Text('Error state'),
+              );
+            } else {
+              return const Placeholder(
+                child: Text('Else state'),
+              );
+            }
+          },
+        ),
+        AddListItemWidget(),
+      ]),
     );
   }
 }
