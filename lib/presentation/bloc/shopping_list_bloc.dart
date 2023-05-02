@@ -48,11 +48,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     ShoppingList currentShoppingList = ShoppingList(items: []);
     if (state is ShoppingListLoaded) {
       currentShoppingList = (state as ShoppingListLoaded).shoppingList;
-    } else {
-      //Initial state
-      //TODO: Should actually wait until the shopping list is loaded or handle this some way
     }
-
     final result = addItemToShoppingList(currentShoppingList, event.newItem);
 
     // Deal with the result

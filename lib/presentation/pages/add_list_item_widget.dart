@@ -18,8 +18,8 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   void _addItem(String title) {
     print("Adding new item: $title");
     _textEditingController.clear();
-    BlocProvider.of<ShoppingListBloc>(context)
-        .add(AddItemToShoppingListEvent(title));
+    // BlocProvider.of<ShoppingListBloc>(context)
+    //     .add(AddItemToShoppingListEvent(title));
   }
 
   @override

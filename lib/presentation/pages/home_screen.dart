@@ -44,6 +44,13 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    dispatchGetShoppingList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
