@@ -14,9 +14,7 @@ class ShoppingListModel extends ShoppingList {
     return ShoppingListModel(items: items);
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "items": (items as List<ListItemModel>).map((item) => item.toJson())
-    };
+  List<dynamic> toJson() {
+    return (items as List<ListItemModel>).map((item) => item.toJson()).toList();
   }
 }

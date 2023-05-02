@@ -62,12 +62,10 @@ void main() {
           ListItemModel(title: "test item 2", collected: true)
         ]);
 
-        final expected = {
-          "items": [
-            {"title": "test item 1", "collected": false},
-            {"title": "test item 2", "collected": true}
-          ]
-        };
+        final expected = [
+          {"title": "test item 1", "collected": false},
+          {"title": "test item 2", "collected": true}
+        ];
 
         // Act
         final actual = tShoppingListModel.toJson();

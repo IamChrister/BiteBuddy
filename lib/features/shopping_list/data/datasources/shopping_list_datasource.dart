@@ -23,8 +23,7 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
 
   @override
   Future<ShoppingListModel> getShoppingList() async {
-    final response = await client.get(
-        Uri.parse(realtimeDatabaseUrl));
+    final response = await client.get(Uri.parse(realtimeDatabaseUrl));
 
     if (response.statusCode == 200) {
       return ShoppingListModel.fromJson(json.decode(response.body));
@@ -36,8 +35,7 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
   @override
   Future<ShoppingListModel> updateShoppingList(
       ShoppingListModel shoppingList) async {
-    final response = await client.put(
-        Uri.parse(realtimeDatabaseUrl),
+    final response = await client.put(Uri.parse(realtimeDatabaseUrl),
         body: shoppingList.toJson());
 
     if (response.statusCode == 200) {
