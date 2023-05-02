@@ -15,7 +15,7 @@ class ShoppingListApp extends StatelessWidget {
     return MaterialApp(
       title: 'BiteBuddy',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomeScreen(),

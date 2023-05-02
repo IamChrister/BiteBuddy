@@ -79,7 +79,7 @@ void main() {
   group('ShoppingListBloc', () {
     const tItemName = "test item 1";
     const tEmptyShoppingList = ShoppingList(items: []);
-    const tShoppingList =
+    var tShoppingList =
         ShoppingList(items: [ListItem(title: "test item 1", collected: false)]);
 
     test('should emit initialState & initialState should be Empty', () {

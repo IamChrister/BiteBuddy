@@ -11,7 +11,7 @@ void main() {
   group('ShoppingListModel', () {
     test('should be a subclass of ShoppingList entity', () async {
       // Arrange
-      const tShoppingListModel = ShoppingListModel(
+      var tShoppingListModel = ShoppingListModel(
           items: [ListItemModel(title: "title", collected: false)]);
 
       // Assert
@@ -26,7 +26,7 @@ void main() {
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('shopping_list.json'));
 
-        const expected = ShoppingListModel(items: [
+        var expected = ShoppingListModel(items: [
           ListItemModel(title: "test item 1", collected: false),
           ListItemModel(title: "test item 2", collected: true)
         ]);
@@ -57,7 +57,7 @@ void main() {
     group('toJson', () {
       test('should return a JSON map containing the proper data', () async {
         // Arrange
-        const ShoppingListModel tShoppingListModel = ShoppingListModel(items: [
+        ShoppingListModel tShoppingListModel = ShoppingListModel(items: [
           ListItemModel(title: "test item 1", collected: false),
           ListItemModel(title: "test item 2", collected: true)
         ]);

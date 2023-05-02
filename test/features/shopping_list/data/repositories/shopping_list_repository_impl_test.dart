@@ -26,7 +26,7 @@ void main() {
           'should return a shopping list when the call to datasource is successful',
           () async {
         // Arrange
-        const expected = ShoppingListModel(
+        var expected = ShoppingListModel(
             items: [ListItemModel(title: "test item 1", collected: false)]);
 
         when(mockShoppingListDatasource.getShoppingList())
@@ -65,7 +65,7 @@ void main() {
           'should return a shopping list when the call to datasource is successful',
           () async {
         // Arrange
-        const expected = ShoppingListModel(
+        var expected = ShoppingListModel(
             items: [ListItemModel(title: "test item 1", collected: false)]);
 
         when(mockShoppingListDatasource.updateShoppingList(expected))
@@ -84,7 +84,7 @@ void main() {
           'should return a server failure when the call to datasource is unsuccessful',
           () async {
         // Arrange
-        const tShoppingList = ShoppingListModel(
+        var tShoppingList = ShoppingListModel(
             items: [ListItemModel(title: "test item 1", collected: false)]);
 
         when(mockShoppingListDatasource.updateShoppingList(tShoppingList))

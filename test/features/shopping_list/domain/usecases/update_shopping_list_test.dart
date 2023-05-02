@@ -23,11 +23,11 @@ void main() {
     test('Updating a shopping list should return the same shopping list',
         () async {
       // Arrange
-      const expected =
+      var expected =
           ShoppingList(items: [ListItem(title: "title", collected: false)]);
 
       when(mockShoppingListRepository.updateShoppingList(expected))
-          .thenAnswer((_) async => const Right(expected));
+          .thenAnswer((_) async => Right(expected));
 
       // Act
       final result = await sut(expected);

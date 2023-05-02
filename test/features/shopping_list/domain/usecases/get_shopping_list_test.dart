@@ -22,11 +22,11 @@ void main() {
   group('GetShoppingList', () {
     test('Should get shopping list from repository', () async {
       // Arrange
-      const expected =
+      var expected =
           ShoppingList(items: [ListItem(title: "title", collected: false)]);
 
       when(shoppingListRepository.getShoppingList())
-          .thenAnswer((_) async => const Right(expected));
+          .thenAnswer((_) async => Right(expected));
 
       // Act
       final result = await sut();

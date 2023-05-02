@@ -17,10 +17,10 @@ void main() {
         'should return a valid ShoppingListModel when given a ShoppingList entity',
         () {
       // Arrange
-      const expected = ShoppingListModel(
+      var expected = ShoppingListModel(
           items: [ListItemModel(title: "test item 1", collected: false)]);
 
-      const tShoppingListEntity = ShoppingList(
+      var tShoppingListEntity = ShoppingList(
           items: [ListItem(title: "test item 1", collected: false)]);
 
       // Act
