@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/exceptions.dart';
+import 'package:eventsource/eventsource.dart';
 import 'package:http/http.dart' as http;
 import '../models/shopping_list_model.dart';
 
@@ -9,6 +10,8 @@ abstract class ShoppingListDatasource {
   ///
   /// Throws a [ServerException] for all error codes
   Future<ShoppingListModel> getShoppingList();
+
+  Future<EventSource> streamShoppingList();
 
   /// Calls the Firebase Firestore/Realtime database endpoint
   ///
@@ -44,7 +47,6 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
     final response = await client.put(Uri.parse(realtimeDatabaseUrl),
         body: jsonEncode(shoppingList));
 
-    print(" original: ${shoppingList} || result: $response");
     if (response.statusCode == 200) {
       final decodedJson = json.decode(response.body);
       if (decodedJson == null) {
@@ -55,5 +57,11 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<EventSource> streamShoppingList() async {
+    final eventSourceUrl = realtimeDatabaseUrl;
+    return await EventSource.connect(Uri.parse(eventSourceUrl));
   }
 }

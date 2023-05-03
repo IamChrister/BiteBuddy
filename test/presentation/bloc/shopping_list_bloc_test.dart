@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
@@ -6,13 +9,17 @@ import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/usecases/stream_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
+import 'package:eventsource/eventsource.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import '../../features/shopping_list/data/datasources/shopping_list_datasource_test.mocks.dart';
+import '../../fixtures/fixture_reader.dart';
 import 'shopping_list_bloc_test.mocks.dart';
 
 // Here we're mostly testing if the states are emitted as expected
@@ -22,19 +29,23 @@ import 'shopping_list_bloc_test.mocks.dart';
   UpdateShoppingListUsecase,
   AddListItemToShoppingListUsecase,
   DeleteItemFromShoppingListUsecase,
+  StreamShoppingListUsecase,
   InputConverter
 ])
 void main() {
   late ShoppingListBloc sut;
   late MockGetShoppingListUsecase mockGetShoppingListUsecase;
   late MockUpdateShoppingListUsecase mockUpdateShoppingListUsecase;
+  late MockStreamShoppingListUsecase mockStreamShoppingListUsecase;
   late MockDeleteItemFromShoppingListUsecase
       mockDeleteItemFromShoppingListUsecase;
   late MockAddListItemToShoppingListUsecase
       mockAddListItemToShoppingListUsecase;
   late MockInputConverter mockInputConverter;
+  late MockEventSource mockEventSource;
 
   setUp(() {
+    mockEventSource = MockEventSource();
     mockInputConverter = MockInputConverter();
     mockGetShoppingListUsecase = MockGetShoppingListUsecase();
     mockUpdateShoppingListUsecase = MockUpdateShoppingListUsecase();
@@ -42,12 +53,14 @@ void main() {
         MockDeleteItemFromShoppingListUsecase();
     mockAddListItemToShoppingListUsecase =
         MockAddListItemToShoppingListUsecase();
+    mockStreamShoppingListUsecase = MockStreamShoppingListUsecase();
 
     sut = ShoppingListBloc(
         getShoppingList: mockGetShoppingListUsecase,
         updateShoppingList: mockUpdateShoppingListUsecase,
         deleteItemFromShoppingList: mockDeleteItemFromShoppingListUsecase,
         addItemToShoppingList: mockAddListItemToShoppingListUsecase,
+        streamShoppingList: mockStreamShoppingListUsecase,
         inputConverter: mockInputConverter);
   });
 
@@ -98,6 +111,30 @@ void main() {
     test('should emit initialState & initialState should be Empty', () {
       // Assert
       expect(sut.initialState, ShoppingListInitial());
+    });
+
+    //TODO: unsure of what to test here
+    group('streamShoppingList', () {
+      //TODO: Try different data formats
+      blocTest<ShoppingListBloc, ShoppingListState>(
+          'should emit [ShoppingListLoadedFromStreamEvent] when a "put" event is received',
+          build: () => sut,
+          act: (bloc) async {
+            when(mockStreamShoppingListUsecase())
+                .thenAnswer((realInvocation) async => mockEventSource);
+            when(mockEventSource.listen((any))).thenAnswer((realInvocation) {
+              final onEvent =
+                  realInvocation.positionalArguments[0] as void Function(Event);
+              //TODO: Continue here, not sure what the data should be
+              onEvent(Event(event: "put", id: ""));
+              return StreamController<Event>().stream.listen((event) {});
+            });
+
+            bloc.add(StreamShoppingListEvent());
+          },
+          expect: () =>
+              //TODO: Why is this SHoppingListLoaded, not ShoppingListLoadedFromStreamEvent?
+              [ShoppingListLoaded(shoppingList: ShoppingList(items: []))]);
     });
 
     group('getShoppingList', () {

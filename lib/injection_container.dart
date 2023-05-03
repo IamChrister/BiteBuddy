@@ -5,6 +5,7 @@ import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_l
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/usecases/stream_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -20,6 +21,7 @@ void init() {
     return ShoppingListBloc(
         getShoppingList: sl(),
         updateShoppingList: sl(),
+        streamShoppingList: sl(),
         deleteItemFromShoppingList: sl(),
         addItemToShoppingList: sl(),
         inputConverter: sl());
@@ -31,6 +33,7 @@ void init() {
       () => AddListItemToShoppingListUsecase(inputConverter: sl()));
   sl.registerLazySingleton(() => UpdateShoppingListUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteItemFromShoppingListUsecase());
+  sl.registerLazySingleton(() => StreamShoppingListUsecase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<ShoppingListRepository>(() => ShoppingListRepositoryImpl(

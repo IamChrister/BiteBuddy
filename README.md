@@ -19,3 +19,8 @@ Run test from the command line with
 ```
 flutter test
 ```
+
+
+## Notes
+### Weak spots/areas to look for errors
+- Handling of streams in bloc

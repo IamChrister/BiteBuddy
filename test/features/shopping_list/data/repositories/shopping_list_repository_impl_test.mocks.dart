@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart'
-    as _i3;
+    as _i4;
 import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart'
     as _i2;
+import 'package:eventsource/eventsource.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -33,32 +34,56 @@ class _FakeShoppingListModel_0 extends _i1.SmartFake
         );
 }
 
+class _FakeEventSource_1 extends _i1.SmartFake implements _i3.EventSource {
+  _FakeEventSource_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [ShoppingListDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockShoppingListDatasource extends _i1.Mock
-    implements _i3.ShoppingListDatasource {
+    implements _i4.ShoppingListDatasource {
   MockShoppingListDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.ShoppingListModel> getShoppingList() => (super.noSuchMethod(
+  _i5.Future<_i2.ShoppingListModel> getShoppingList() => (super.noSuchMethod(
         Invocation.method(
           #getShoppingList,
           [],
         ),
         returnValue:
-            _i4.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
+            _i5.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
           this,
           Invocation.method(
             #getShoppingList,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.ShoppingListModel>);
+      ) as _i5.Future<_i2.ShoppingListModel>);
   @override
-  _i4.Future<_i2.ShoppingListModel> updateShoppingList(
+  _i5.Future<_i3.EventSource> streamShoppingList() => (super.noSuchMethod(
+        Invocation.method(
+          #streamShoppingList,
+          [],
+        ),
+        returnValue: _i5.Future<_i3.EventSource>.value(_FakeEventSource_1(
+          this,
+          Invocation.method(
+            #streamShoppingList,
+            [],
+          ),
+        )),
+      ) as _i5.Future<_i3.EventSource>);
+  @override
+  _i5.Future<_i2.ShoppingListModel> updateShoppingList(
           _i2.ShoppingListModel? shoppingList) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -66,12 +91,12 @@ class MockShoppingListDatasource extends _i1.Mock
           [shoppingList],
         ),
         returnValue:
-            _i4.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
+            _i5.Future<_i2.ShoppingListModel>.value(_FakeShoppingListModel_0(
           this,
           Invocation.method(
             #updateShoppingList,
             [shoppingList],
           ),
         )),
-      ) as _i4.Future<_i2.ShoppingListModel>);
+      ) as _i5.Future<_i2.ShoppingListModel>);
 }

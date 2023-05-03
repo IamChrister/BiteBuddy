@@ -47,7 +47,7 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   void dispatchGetShoppingList() {
-    BlocProvider.of<ShoppingListBloc>(context).add(GetShoppingListEvent());
+    BlocProvider.of<ShoppingListBloc>(context).add(StreamShoppingListEvent());
   }
 
   @override

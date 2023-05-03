@@ -28,3 +28,14 @@ class DeleteItemFromShoppingListEvent extends ShoppingListEvent {
 
   DeleteItemFromShoppingListEvent(this.item) : super([item]);
 }
+
+class StreamShoppingListEvent extends ShoppingListEvent {
+  StreamShoppingListEvent() : super([]);
+}
+
+class ShoppingListLoadedFromStreamEvent extends ShoppingListEvent {
+  final ShoppingList shoppingList;
+
+  ShoppingListLoadedFromStreamEvent({required this.shoppingList})
+      : super([shoppingList]);
+}

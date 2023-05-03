@@ -3,25 +3,28 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i7;
 
-import 'package:bite_buddy/core/error/failures.dart' as _i7;
+import 'package:bite_buddy/core/error/failures.dart' as _i8;
 import 'package:bite_buddy/core/util/input_converter.dart' as _i4;
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart'
-    as _i12;
+    as _i13;
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart'
-    as _i8;
+    as _i9;
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart'
     as _i2;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart'
-    as _i10;
-import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart'
     as _i11;
+import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart'
+    as _i12;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart'
-    as _i5;
+    as _i6;
+import 'package:bite_buddy/features/shopping_list/domain/usecases/stream_shopping_list.dart'
+    as _i14;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart'
-    as _i9;
+    as _i10;
 import 'package:dartz/dartz.dart' as _i3;
+import 'package:eventsource/eventsource.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -67,11 +70,21 @@ class _FakeInputConverter_2 extends _i1.SmartFake
         );
 }
 
+class _FakeEventSource_3 extends _i1.SmartFake implements _i5.EventSource {
+  _FakeEventSource_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GetShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetShoppingListUsecase extends _i1.Mock
-    implements _i5.GetShoppingListUsecase {
+    implements _i6.GetShoppingListUsecase {
   MockGetShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -85,29 +98,29 @@ class MockGetShoppingListUsecase extends _i1.Mock
         ),
       ) as _i2.ShoppingListRepository);
   @override
-  _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>> call() =>
+  _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>> call() =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [],
         ),
         returnValue:
-            _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>>.value(
-                _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
+            _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>.value(
+                _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
           this,
           Invocation.method(
             #call,
             [],
           ),
         )),
-      ) as _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>>);
+      ) as _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>);
 }
 
 /// A class which mocks [UpdateShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockUpdateShoppingListUsecase extends _i1.Mock
-    implements _i9.UpdateShoppingListUsecase {
+    implements _i10.UpdateShoppingListUsecase {
   MockUpdateShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -121,30 +134,30 @@ class MockUpdateShoppingListUsecase extends _i1.Mock
         ),
       ) as _i2.ShoppingListRepository);
   @override
-  _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>> call(
-          _i8.ShoppingList? shoppingList) =>
+  _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>> call(
+          _i9.ShoppingList? shoppingList) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [shoppingList],
         ),
         returnValue:
-            _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>>.value(
-                _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
+            _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>.value(
+                _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
           this,
           Invocation.method(
             #call,
             [shoppingList],
           ),
         )),
-      ) as _i6.Future<_i3.Either<_i7.Failure, _i8.ShoppingList>>);
+      ) as _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>);
 }
 
 /// A class which mocks [AddListItemToShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAddListItemToShoppingListUsecase extends _i1.Mock
-    implements _i10.AddListItemToShoppingListUsecase {
+    implements _i11.AddListItemToShoppingListUsecase {
   MockAddListItemToShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -158,8 +171,8 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
         ),
       ) as _i4.InputConverter);
   @override
-  _i3.Either<_i7.Failure, _i8.ShoppingList> call(
-    _i8.ShoppingList? shoppingList,
+  _i3.Either<_i8.Failure, _i9.ShoppingList> call(
+    _i9.ShoppingList? shoppingList,
     String? itemString,
   ) =>
       (super.noSuchMethod(
@@ -170,7 +183,7 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
             itemString,
           ],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
+        returnValue: _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
           this,
           Invocation.method(
             #call,
@@ -180,22 +193,22 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
             ],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i8.ShoppingList>);
+      ) as _i3.Either<_i8.Failure, _i9.ShoppingList>);
 }
 
 /// A class which mocks [DeleteItemFromShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
-    implements _i11.DeleteItemFromShoppingListUsecase {
+    implements _i12.DeleteItemFromShoppingListUsecase {
   MockDeleteItemFromShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Either<_i7.Failure, _i8.ShoppingList> call(
-    _i8.ShoppingList? shoppingList,
-    _i12.ListItem? item,
+  _i3.Either<_i8.Failure, _i9.ShoppingList> call(
+    _i9.ShoppingList? shoppingList,
+    _i13.ListItem? item,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -205,7 +218,7 @@ class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
             item,
           ],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
+        returnValue: _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
           this,
           Invocation.method(
             #call,
@@ -215,7 +228,40 @@ class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
             ],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i8.ShoppingList>);
+      ) as _i3.Either<_i8.Failure, _i9.ShoppingList>);
+}
+
+/// A class which mocks [StreamShoppingListUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStreamShoppingListUsecase extends _i1.Mock
+    implements _i14.StreamShoppingListUsecase {
+  MockStreamShoppingListUsecase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ShoppingListRepository get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeShoppingListRepository_0(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i2.ShoppingListRepository);
+  @override
+  _i7.Future<_i5.EventSource> call() => (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [],
+        ),
+        returnValue: _i7.Future<_i5.EventSource>.value(_FakeEventSource_3(
+          this,
+          Invocation.method(
+            #call,
+            [],
+          ),
+        )),
+      ) as _i7.Future<_i5.EventSource>);
 }
 
 /// A class which mocks [InputConverter].
@@ -227,18 +273,18 @@ class MockInputConverter extends _i1.Mock implements _i4.InputConverter {
   }
 
   @override
-  _i3.Either<_i7.Failure, _i12.ListItem> stringToListItem(String? str) =>
+  _i3.Either<_i8.Failure, _i13.ListItem> stringToListItem(String? str) =>
       (super.noSuchMethod(
         Invocation.method(
           #stringToListItem,
           [str],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i12.ListItem>(
+        returnValue: _FakeEither_1<_i8.Failure, _i13.ListItem>(
           this,
           Invocation.method(
             #stringToListItem,
             [str],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i12.ListItem>);
+      ) as _i3.Either<_i8.Failure, _i13.ListItem>);
 }

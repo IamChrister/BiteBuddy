@@ -64,8 +64,8 @@ void main() {
         ]);
 
         final expected = [
-          {"title": "test item 1", "collected": false},
-          {"title": "test item 2", "collected": true}
+          {"id": "1", "title": "test item 1", "collected": false},
+          {"id": "2", "title": "test item 2", "collected": true}
         ];
 
         // Act

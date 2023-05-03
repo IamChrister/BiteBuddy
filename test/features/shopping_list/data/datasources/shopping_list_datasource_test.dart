@@ -3,6 +3,7 @@ import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/exceptions.dart';
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart';
 import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
+import 'package:eventsource/eventsource.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -10,13 +11,15 @@ import 'package:mockito/mockito.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'shopping_list_datasource_test.mocks.dart';
 
-@GenerateMocks([http.Client])
+@GenerateMocks([http.Client, EventSource])
 void main() {
   late ShoppingListDatasourceImpl sut;
   late MockClient mockClient;
+  late MockEventSource mockEventSource;
 
   setUp(() {
     mockClient = MockClient();
+    mockEventSource = MockEventSource();
     sut = ShoppingListDatasourceImpl(client: mockClient);
   });
 
@@ -34,6 +37,17 @@ void main() {
   }
 
   group('shoppingListDatasource', () {
+    //TODO: unsure of what to test here
+    group('streamShoppingList', () {
+      test('should ', () async {
+        // Arrange
+
+        // Act
+
+        // Assert
+      });
+    });
+
     group('updateShoppingList', () {
       var tShoppingListModel =
           ShoppingListModel.fromJson(jsonDecode(fixture('shopping_list.json')));

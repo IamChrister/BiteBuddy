@@ -21,6 +21,17 @@ void main() {
   });
 
   group('ShoppingListRepositoryImpl', () {
+    //TODO: unsure of what to test here
+    group('streamShoppingList', () {
+      test('should ', () async {
+        // Arrange
+
+        // Act
+
+        // Assert
+      });
+    });
+
     group('getShoppingList', () {
       test(
           'should return a shopping list when the call to datasource is successful',
