@@ -8,13 +8,15 @@ import 'dart:async' as _i6;
 import 'package:bite_buddy/core/error/failures.dart' as _i7;
 import 'package:bite_buddy/core/util/input_converter.dart' as _i4;
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart'
-    as _i11;
+    as _i12;
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart'
     as _i8;
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart'
     as _i2;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart'
     as _i10;
+import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart'
+    as _i11;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart'
     as _i5;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart'
@@ -181,6 +183,41 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
       ) as _i3.Either<_i7.Failure, _i8.ShoppingList>);
 }
 
+/// A class which mocks [DeleteItemFromShoppingListUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
+    implements _i11.DeleteItemFromShoppingListUsecase {
+  MockDeleteItemFromShoppingListUsecase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Either<_i7.Failure, _i8.ShoppingList> call(
+    _i8.ShoppingList? shoppingList,
+    _i12.ListItem? item,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [
+            shoppingList,
+            item,
+          ],
+        ),
+        returnValue: _FakeEither_1<_i7.Failure, _i8.ShoppingList>(
+          this,
+          Invocation.method(
+            #call,
+            [
+              shoppingList,
+              item,
+            ],
+          ),
+        ),
+      ) as _i3.Either<_i7.Failure, _i8.ShoppingList>);
+}
+
 /// A class which mocks [InputConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -190,18 +227,18 @@ class MockInputConverter extends _i1.Mock implements _i4.InputConverter {
   }
 
   @override
-  _i3.Either<_i7.Failure, _i11.ListItem> stringToListItem(String? str) =>
+  _i3.Either<_i7.Failure, _i12.ListItem> stringToListItem(String? str) =>
       (super.noSuchMethod(
         Invocation.method(
           #stringToListItem,
           [str],
         ),
-        returnValue: _FakeEither_1<_i7.Failure, _i11.ListItem>(
+        returnValue: _FakeEither_1<_i7.Failure, _i12.ListItem>(
           this,
           Invocation.method(
             #stringToListItem,
             [str],
           ),
         ),
-      ) as _i3.Either<_i7.Failure, _i11.ListItem>);
+      ) as _i3.Either<_i7.Failure, _i12.ListItem>);
 }

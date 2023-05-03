@@ -1,7 +1,10 @@
 import 'package:bite_buddy/core/constants.dart';
+import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
+import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart';
 import 'package:bloc/bloc.dart';
@@ -14,18 +17,20 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final GetShoppingListUsecase getShoppingList;
   final UpdateShoppingListUsecase updateShoppingList;
   final AddListItemToShoppingListUsecase addItemToShoppingList;
-  //TODO: Implement deleteItem
+  final DeleteItemFromShoppingListUsecase deleteItemFromShoppingList;
   final InputConverter inputConverter;
 
-// TODO: Implement updating of the shopping list
   ShoppingListBloc(
       {required this.getShoppingList,
       required this.updateShoppingList,
       required this.addItemToShoppingList,
+      required this.deleteItemFromShoppingList,
       required this.inputConverter})
       : super(ShoppingListInitial()) {
     on<AddItemToShoppingListEvent>(_onAddItemToShoppingListEvent);
     on<GetShoppingListEvent>(_onGetShoppingListEvent);
+    on<UpdateShoppingListEvent>(_onUpdateShoppingListEvent);
+    on<DeleteItemFromShoppingListEvent>(_onDeleteItemFromShoppingListEvent);
   }
 
   @override
@@ -42,9 +47,54 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     });
   }
 
+  Future<void> _onDeleteItemFromShoppingListEvent(
+      DeleteItemFromShoppingListEvent event,
+      Emitter<ShoppingListState> emit) async {
+    /// Should
+    /// 1. Delete the item from shoppinglist
+    /// 2. Should emit [Error] if the item is not in the shopping list
+    /// 3. Update the shopping list to a new state and emit [ShoppingListLoaded on success]
+    /// 4. Emit [Error] if the server update fails
+
+    if (state is ShoppingListLoaded) {
+      final result = deleteItemFromShoppingList(
+          (state as ShoppingListLoaded).shoppingList, event.item);
+
+      result.fold(
+          (failure) =>
+              emit(ShoppingListError(message: ITEM_NOT_FOUND_FAILURE_MESSAGE)),
+          (res) async {
+        emit(ShoppingListLoading());
+        final updated = await updateShoppingList(res);
+
+        updated.fold(
+            (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
+            (newShoppingList) =>
+                emit(ShoppingListLoaded(shoppingList: newShoppingList)));
+      });
+    }
+  }
+
+  Future<void> _onUpdateShoppingListEvent(
+      UpdateShoppingListEvent event, Emitter<ShoppingListState> emit) async {
+    // Actually probably should have a different effect since it's a bit different from the initial load maybe in the UI
+    emit(ShoppingListLoading());
+    final updateResult = await updateShoppingList(event.shoppingList);
+
+    updateResult.fold(
+        (failure) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
+        (result) {
+      emit(ShoppingListLoaded(shoppingList: result));
+    });
+  }
+
   /// Event that runs when an item is added to the shopping list
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
+    /// SHould
+    /// Should add the item to shopping list
+    /// Should call the updateShoppingListEvent
+
     ShoppingList currentShoppingList = ShoppingList(items: []);
     if (state is ShoppingListLoaded) {
       currentShoppingList = (state as ShoppingListLoaded).shoppingList;
@@ -52,20 +102,24 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     final result = addItemToShoppingList(currentShoppingList, event.newItem);
 
     // Deal with the result
-    result.fold((failure) {
+    // if (result is Failure) {
+    //   emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
+    // } else {
+    //   final shoppingListResult = (result as ShoppingList);
+    // }
+
+    //TODO: WHY does this need await??
+    await result.fold((failure) {
       emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
     }, (result) async {
-      //TODO:emit(Added(shoppingList: result));
-
       //Call the backend update
       emit(ShoppingListLoading());
       final updated = await updateShoppingList(result);
 
       updated.fold(
           (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
-          (newShoppingList) {
-        //TODO:emit(Updated(shoppingList: newShoppingList));
-      });
+          (newShoppingList) =>
+              emit(ShoppingListLoaded(shoppingList: newShoppingList)));
     });
   }
 }

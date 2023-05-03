@@ -36,10 +36,10 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
   Future<ShoppingListModel> updateShoppingList(
       ShoppingListModel shoppingList) async {
     final response = await client.put(Uri.parse(realtimeDatabaseUrl),
-        body: shoppingList.toJson());
+        body: jsonEncode(shoppingList));
 
     if (response.statusCode == 200) {
-      return ShoppingListModel.fromJson(json.decode(response.body));
+      return ShoppingListModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException();
     }

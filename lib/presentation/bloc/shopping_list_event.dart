@@ -19,14 +19,12 @@ class UpdateShoppingListEvent extends ShoppingListEvent {
 
 class AddItemToShoppingListEvent extends ShoppingListEvent {
   final String newItem;
-  final ShoppingList shoppingList;
 
-  AddItemToShoppingListEvent(this.newItem, this.shoppingList)
-      : super([newItem]);
+  AddItemToShoppingListEvent(this.newItem) : super([newItem]);
 }
 
 class DeleteItemFromShoppingListEvent extends ShoppingListEvent {
-  final String newItem;
+  final ListItem item;
 
-  DeleteItemFromShoppingListEvent(this.newItem) : super([newItem]);
+  DeleteItemFromShoppingListEvent(this.item) : super([item]);
 }

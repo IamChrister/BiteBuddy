@@ -3,3 +3,4 @@ String realtimeDatabaseUrl =
 
 const INVALID_INPUT_FAILURE_MESSAGE = "Name of the item should not be empty.";
 const SERVER_FAILURE_MESSAGE = "Name of the item should not be empty.";
+const ITEM_NOT_FOUND_FAILURE_MESSAGE = "The item was not found in the list.";

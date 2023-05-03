@@ -35,21 +35,21 @@ void main() {
 
   group('shoppingListDatasource', () {
     group('updateShoppingList', () {
-      var tShoppingListModel = ShoppingListModel.fromJson(
-          json.decode(fixture('shopping_list.json')));
+      var tShoppingListModel =
+          ShoppingListModel.fromJson(jsonDecode(fixture('shopping_list.json')));
 
       test(
           'should perform a PUT request to Firestore Realtime Database REST API is successful',
           () async {
         // Arrange
         setUpMockClientSuccess();
+        final body = jsonEncode(tShoppingListModel);
 
         // Act
         await sut.updateShoppingList(tShoppingListModel);
 
         // Assert
-        verify(mockClient.put(Uri.parse(realtimeDatabaseUrl),
-            body: json.decode(fixture('shopping_list.json'))));
+        verify(mockClient.put(Uri.parse(realtimeDatabaseUrl), body: body));
       });
       test('should return ShoppingListModel when the response code is 200',
           () async {
@@ -63,7 +63,7 @@ void main() {
 
         // Assert
         verify(mockClient.put(Uri.parse(realtimeDatabaseUrl),
-            body: json.decode(fixture('shopping_list.json'))));
+            body: jsonEncode(tShoppingListModel)));
         expect(actual, expected);
       });
     });
