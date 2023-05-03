@@ -89,8 +89,8 @@ void main() {
   const tEmptyName = "   ";
   const tItemName = "test item 1";
   const tEmptyShoppingList = ShoppingList(items: []);
-  var tListItem = ListItem(title: "test item 1", collected: false);
-  final tShoppingList =
+  var tListItem = const ListItem(title: "test item 1", collected: false);
+  const tShoppingList =
       ShoppingList(items: [ListItem(title: "test item 1", collected: false)]);
 
   group('ShoppingListBloc', () {

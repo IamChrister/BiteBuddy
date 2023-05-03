@@ -29,7 +29,7 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
       // If the decoded json is null then there is no data currently.
       final decodedJson = json.decode(response.body);
       if (decodedJson == null) {
-        return ShoppingListModel(items: []);
+        return const ShoppingListModel(items: []);
       } else {
         return ShoppingListModel.fromJson(decodedJson);
       }
@@ -47,7 +47,7 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
     if (response.statusCode == 200) {
       final decodedJson = json.decode(response.body);
       if (decodedJson == null) {
-        return ShoppingListModel(items: []);
+        return const ShoppingListModel(items: []);
       } else {
         return ShoppingListModel.fromJson(jsonDecode(response.body));
       }

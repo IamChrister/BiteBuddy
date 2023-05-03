@@ -23,8 +23,8 @@ void main() {
     test('Updating a shopping list should return the same shopping list',
         () async {
       // Arrange
-      var expected =
-          ShoppingList(items: [ListItem(title: "title", collected: false)]);
+      var expected = const ShoppingList(
+          items: [ListItem(title: "title", collected: false)]);
 
       when(mockShoppingListRepository.updateShoppingList(expected))
           .thenAnswer((_) async => Right(expected));

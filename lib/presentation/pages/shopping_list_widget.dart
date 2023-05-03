@@ -36,9 +36,9 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                 direction: DismissDirection.endToStart,
                 background: Container(
                   alignment: Alignment.centerRight,
-                  padding: EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 20),
                   color: Colors.red,
-                  child: Icon(Icons.delete, color: Colors.white),
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
                 onDismissed: (direction) {
                   _items.removeAt(index);
@@ -48,7 +48,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                 child: ListTile(
                   onTap: () {
                     setState(() {
-                      item.collected = !item.collected;
+                      _items[index] = item.toggleCollected();
                     });
                     onUpdateShoppingList();
                   },

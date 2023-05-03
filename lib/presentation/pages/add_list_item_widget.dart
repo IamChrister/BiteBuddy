@@ -1,7 +1,5 @@
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddListItemWidget extends StatefulWidget {
@@ -18,7 +16,6 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   void _addItem(String title) {
     if (BlocProvider.of<ShoppingListBloc>(context).state
         is ShoppingListLoaded) {
-      print("Adding new item: $title");
       _textEditingController.clear();
       BlocProvider.of<ShoppingListBloc>(context)
           .add(AddItemToShoppingListEvent(title));
@@ -33,7 +30,7 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
         Expanded(
           child: TextField(
             controller: _textEditingController,
-            decoration: InputDecoration(hintText: 'Add new item...'),
+            decoration: const InputDecoration(hintText: 'Add new item...'),
             onChanged: (value) {
               inputStr = value;
             },
@@ -45,7 +42,7 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
               _addItem(inputStr);
             }
           },
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         ),
       ],
     );

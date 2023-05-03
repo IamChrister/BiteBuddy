@@ -1,8 +1,8 @@
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 
-//TODO: We need id's
+//TODO: We need id's OR we can use the title essentially as an id
 class ListItemModel extends ListItem {
-  ListItemModel({required String title, required bool collected})
+  const ListItemModel({required String title, required bool collected})
       : super(title: title, collected: collected);
 
   // A factory to enable casting from JSON to ListItemModel
@@ -12,6 +12,11 @@ class ListItemModel extends ListItem {
 
   Map<String, dynamic> toJson() {
     return {"title": title, "collected": collected};
+  }
+
+  @override
+  ListItemModel toggleCollected() {
+    return ListItemModel(title: title, collected: !collected);
   }
 
   @override

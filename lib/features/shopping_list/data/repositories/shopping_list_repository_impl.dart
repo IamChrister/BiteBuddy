@@ -25,7 +25,6 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   Future<Either<Failure, ShoppingList>> updateShoppingList(
       ShoppingList shoppingList) async {
     try {
-      //TODO: Check if I'm doing this correctly, do I need the mapper or is this bs?
       return Right(await shoppingListDatasource.updateShoppingList(
           ShoppingListMapper().entityToModel(shoppingList)));
     } on ServerException {

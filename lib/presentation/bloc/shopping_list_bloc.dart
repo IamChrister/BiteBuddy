@@ -1,5 +1,4 @@
 import 'package:bite_buddy/core/constants.dart';
-import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
@@ -33,7 +32,6 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     on<DeleteItemFromShoppingListEvent>(_onDeleteItemFromShoppingListEvent);
   }
 
-  @override
   ShoppingListState get initialState => ShoppingListInitial();
 
   Future<void> _onGetShoppingListEvent(
@@ -85,7 +83,6 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     updateResult.fold(
         (failure) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
         (result) {
-      print("Update success, emitting state");
       emit(ShoppingListLoaded(shoppingList: result));
     });
   }
@@ -95,26 +92,15 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     //TODO: Handle what happens if the item with the same title is added again
 
-    ShoppingList currentShoppingList = ShoppingList(items: []);
+    ShoppingList currentShoppingList = const ShoppingList(items: []);
     if (state is ShoppingListLoaded) {
       currentShoppingList = (state as ShoppingListLoaded).shoppingList;
     }
     final result = addItemToShoppingList(currentShoppingList, event.newItem);
 
-    // Deal with the result
-    // if (result is Failure) {
-    //   emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
-    // } else {
-    //   final shoppingListResult = (result as ShoppingList);
-    // }
-
-    //TODO: WHY does this need await??
     await result.fold((failure) {
       emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
     }, (result) async {
-      //Call the backend update
-      // UpdateShoppingListEvent(result);
-
       emit(ShoppingListLoading());
       final updated = await updateShoppingList(result);
 

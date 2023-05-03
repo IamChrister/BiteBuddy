@@ -13,7 +13,7 @@ void main() {
   group('inputConverter', () {
     test('should return a ListItem when the string is not empty', () {
       // Arrange
-      final str = 'milk';
+      const str = 'milk';
 
       // Act
       final result = inputConverter.stringToListItem(str);

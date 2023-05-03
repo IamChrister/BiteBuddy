@@ -1,14 +1,9 @@
 import 'package:bite_buddy/core/util/input_converter.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
-import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-
-import 'add_list_item_to_shopping_list_test.mocks.dart';
 
 @GenerateMocks([InputConverter])
 void main() {
@@ -19,16 +14,16 @@ void main() {
   });
 
   group('DeleteListItemToShoppingList', () {
-    final ShoppingList tShoppingList =
+    const ShoppingList tShoppingList =
         ShoppingList(items: [ListItem(title: "test item 1", collected: false)]);
-    final tItem = ListItem(title: "test item 1", collected: false);
+    const tItem = ListItem(title: "test item 1", collected: false);
 
-    final tMissingItem =
+    const tMissingItem =
         ListItem(title: "No such item should be in list", collected: true);
 
     test('should remove an item from the shoppingList', () {
       // Arrange
-      final expected = ShoppingList(items: []);
+      const expected = ShoppingList(items: []);
 
       // Act
       final result = sut.call(tShoppingList, tItem);

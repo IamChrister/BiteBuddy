@@ -22,8 +22,8 @@ void main() {
   group('GetShoppingList', () {
     test('Should get shopping list from repository', () async {
       // Arrange
-      var expected =
-          ShoppingList(items: [ListItem(title: "title", collected: false)]);
+      var expected = const ShoppingList(
+          items: [ListItem(title: "title", collected: false)]);
 
       when(shoppingListRepository.getShoppingList())
           .thenAnswer((_) async => Right(expected));
