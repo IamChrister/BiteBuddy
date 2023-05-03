@@ -45,7 +45,12 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
         body: jsonEncode(shoppingList));
 
     if (response.statusCode == 200) {
-      return ShoppingListModel.fromJson(jsonDecode(response.body));
+      final decodedJson = json.decode(response.body);
+      if (decodedJson == null) {
+        return ShoppingListModel(items: []);
+      } else {
+        return ShoppingListModel.fromJson(jsonDecode(response.body));
+      }
     } else {
       throw ServerException();
     }
