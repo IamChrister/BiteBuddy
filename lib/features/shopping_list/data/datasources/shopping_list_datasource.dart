@@ -26,7 +26,13 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
     final response = await client.get(Uri.parse(realtimeDatabaseUrl));
 
     if (response.statusCode == 200) {
-      return ShoppingListModel.fromJson(json.decode(response.body));
+      // If the decoded json is null then there is no data currently.
+      final decodedJson = json.decode(response.body);
+      if (decodedJson == null) {
+        return ShoppingListModel(items: []);
+      } else {
+        return ShoppingListModel.fromJson(decodedJson);
+      }
     } else {
       throw ServerException();
     }

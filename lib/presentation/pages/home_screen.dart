@@ -1,4 +1,5 @@
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
+import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/injection_container.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:bite_buddy/presentation/pages/add_list_item_widget.dart';
@@ -17,14 +18,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void _clearShoppingList() {
+    BlocProvider.of<ShoppingListBloc>(context)
+        .add(UpdateShoppingListEvent(ShoppingList(items: [])));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Bite Buddy")),
-      body: BlocProvider(
-        create: (context) => sl<ShoppingListBloc>(),
-        child: HomeBody(),
+      appBar: AppBar(
+        title: const Text("Bite Buddy"),
+        actions: [
+          IconButton(onPressed: _clearShoppingList, icon: Icon(Icons.clear))
+        ],
       ),
+      body: HomeBody(),
     );
   }
 }
