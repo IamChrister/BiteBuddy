@@ -93,9 +93,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   /// Event that runs when an item is added to the shopping list
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
-    /// SHould
-    /// Should add the item to shopping list
-    /// Should call the updateShoppingListEvent
+    //TODO: Handle what happens if the item with the same title is added again
 
     ShoppingList currentShoppingList = ShoppingList(items: []);
     if (state is ShoppingListLoaded) {

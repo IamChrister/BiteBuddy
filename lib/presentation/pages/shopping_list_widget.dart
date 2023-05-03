@@ -14,7 +14,7 @@ class ShoppingListWidget extends StatefulWidget {
 class _ShoppingListWidgetState extends State<ShoppingListWidget> {
   late List<ListItem> _items = [];
 
-  void onDeleteItem(ListItem item) {
+  void onUpdateShoppingList() {
     BlocProvider.of<ShoppingListBloc>(context)
         .add(UpdateShoppingListEvent(ShoppingList(items: _items)));
   }
@@ -42,7 +42,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                 ),
                 onDismissed: (direction) {
                   _items.removeAt(index);
-                  onDeleteItem(item);
+                  onUpdateShoppingList();
                   setState(() {});
                 },
                 child: ListTile(
@@ -50,6 +50,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                     setState(() {
                       item.collected = !item.collected;
                     });
+                    onUpdateShoppingList();
                   },
                   title: Text(
                     item.title,
@@ -69,6 +70,8 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                 final ListItem item = _items.removeAt(oldIndex);
                 _items.insert(newIndex, item);
               });
+
+              onUpdateShoppingList();
             },
           );
         },
