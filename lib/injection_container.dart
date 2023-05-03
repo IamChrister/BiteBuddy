@@ -40,7 +40,6 @@ void init() {
   // Datasource
   sl.registerLazySingleton<ShoppingListDatasource>(
       () => ShoppingListDatasourceImpl(client: sl()));
-  //TODO: Do I need the mapper?
 
   //! Core
   sl.registerLazySingleton(() => InputConverter());

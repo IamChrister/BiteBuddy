@@ -14,12 +14,12 @@ void main() {
   });
 
   group('DeleteListItemToShoppingList', () {
-    const ShoppingList tShoppingList =
-        ShoppingList(items: [ListItem(title: "test item 1", collected: false)]);
-    const tItem = ListItem(title: "test item 1", collected: false);
+    const ShoppingList tShoppingList = ShoppingList(
+        items: [ListItem(id: "1", title: "test item 1", collected: false)]);
+    const tItem = ListItem(id: "1", title: "test item 1", collected: false);
 
-    const tMissingItem =
-        ListItem(title: "No such item should be in list", collected: true);
+    const tMissingItem = ListItem(
+        id: "1", title: "No such item should be in list", collected: true);
 
     test('should remove an item from the shoppingList', () {
       // Arrange

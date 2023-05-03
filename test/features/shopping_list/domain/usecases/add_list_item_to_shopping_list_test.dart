@@ -22,7 +22,8 @@ void main() {
   group('AddListItemToShoppingList', () {
     //TODO: Test with more cases
     ShoppingList tShoppingList = const ShoppingList(items: []);
-    ListItem tListItem = const ListItem(title: "test item 1", collected: false);
+    ListItem tListItem =
+        const ListItem(id: "1", title: "test item 1", collected: false);
     String newItemName = "test item 1";
 
     test('should add a new item to the shoppingList', () {

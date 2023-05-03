@@ -24,7 +24,7 @@ void main() {
         () async {
       // Arrange
       var expected = const ShoppingList(
-          items: [ListItem(title: "title", collected: false)]);
+          items: [ListItem(id: "1", title: "title", collected: false)]);
 
       when(mockShoppingListRepository.updateShoppingList(expected))
           .thenAnswer((_) async => Right(expected));

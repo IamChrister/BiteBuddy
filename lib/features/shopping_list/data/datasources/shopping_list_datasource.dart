@@ -44,6 +44,7 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
     final response = await client.put(Uri.parse(realtimeDatabaseUrl),
         body: jsonEncode(shoppingList));
 
+    print(" original: ${shoppingList} || result: $response");
     if (response.statusCode == 200) {
       final decodedJson = json.decode(response.body);
       if (decodedJson == null) {

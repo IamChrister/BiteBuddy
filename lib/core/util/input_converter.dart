@@ -9,7 +9,7 @@ class InputConverter {
     if (formattedInput.isEmpty) {
       return Left(InvalidInputFailure());
     } else {
-      return Right(ListItem(title: formattedInput, collected: false));
+      return Right(ListItem.withTitle(formattedInput));
     }
   }
 }

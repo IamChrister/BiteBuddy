@@ -12,7 +12,7 @@ void main() {
     test('should be a subclass of ShoppingList entity', () async {
       // Arrange
       var tShoppingListModel = const ShoppingListModel(
-          items: [ListItemModel(title: "title", collected: false)]);
+          items: [ListItemModel(id: "1", title: "title", collected: false)]);
 
       // Assert
       expect(tShoppingListModel, isA<ShoppingList>());
@@ -26,9 +26,10 @@ void main() {
         final List<dynamic> jsonMap =
             json.decode(fixture('shopping_list.json'));
 
+//TODO: Refactor
         var expected = const ShoppingListModel(items: [
-          ListItemModel(title: "test item 1", collected: false),
-          ListItemModel(title: "test item 2", collected: true)
+          ListItemModel(id: "1", title: "test item 1", collected: false),
+          ListItemModel(id: "2", title: "test item 2", collected: true)
         ]);
 
         // Act
@@ -58,8 +59,8 @@ void main() {
       test('should return a JSON map containing the proper data', () async {
         // Arrange
         ShoppingListModel tShoppingListModel = const ShoppingListModel(items: [
-          ListItemModel(title: "test item 1", collected: false),
-          ListItemModel(title: "test item 2", collected: true)
+          ListItemModel(id: "1", title: "test item 1", collected: false),
+          ListItemModel(id: "2", title: "test item 2", collected: true)
         ]);
 
         final expected = [

@@ -17,11 +17,12 @@ void main() {
         'should return a valid ShoppingListModel when given a ShoppingList entity',
         () {
       // Arrange
-      var expected = const ShoppingListModel(
-          items: [ListItemModel(title: "test item 1", collected: false)]);
+      var expected = const ShoppingListModel(items: [
+        ListItemModel(id: "1", title: "test item 1", collected: false)
+      ]);
 
       var tShoppingListEntity = const ShoppingList(
-          items: [ListItem(title: "test item 1", collected: false)]);
+          items: [ListItem(id: "1", title: "test item 1", collected: false)]);
 
       // Act
       final actual = sut.entityToModel(tShoppingListEntity);
