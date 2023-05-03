@@ -12,7 +12,17 @@ class DeleteItemFromShoppingListUsecase {
     // Convert item string to ListItem
 
     // Cannot add to immutable list so we'll create a new one.
-    List<ListItem> items = List.from(shoppingList.items);
+    List<ListItem> items = List<ListItem>.from(shoppingList.items);
+    print(
+        "Deleting item: item: ${item} shoppingList: ${shoppingList} || Items: ${items} || IndexOf: ${items.indexOf(item)}");
+
+    for (int i = 0; i < items.length; i++) {
+      if (items[i].title == item.title) {
+        print("GOT A HIT!");
+      } else {
+        print("No hit");
+      }
+    }
     bool itemRemoved = items.remove(item);
 
     if (itemRemoved) {

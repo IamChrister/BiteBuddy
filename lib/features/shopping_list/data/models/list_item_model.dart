@@ -13,4 +13,7 @@ class ListItemModel extends ListItem {
   Map<String, dynamic> toJson() {
     return {"title": title, "collected": collected};
   }
+
+  @override
+  List<Object> get props => [title, collected];
 }

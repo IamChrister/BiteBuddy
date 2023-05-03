@@ -65,6 +65,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
               emit(ShoppingListError(message: ITEM_NOT_FOUND_FAILURE_MESSAGE)),
           (res) async {
         emit(ShoppingListLoading());
+
         final updated = await updateShoppingList(res);
 
         updated.fold(
@@ -84,6 +85,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     updateResult.fold(
         (failure) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
         (result) {
+      print("Update success, emitting state");
       emit(ShoppingListLoaded(shoppingList: result));
     });
   }
@@ -113,6 +115,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
     }, (result) async {
       //Call the backend update
+      // UpdateShoppingListEvent(result);
+
       emit(ShoppingListLoading());
       final updated = await updateShoppingList(result);
 

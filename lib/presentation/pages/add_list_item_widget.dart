@@ -16,13 +16,13 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   String inputStr = "";
 
   void _addItem(String title) {
-    print("Adding new item: $title");
-
     if (BlocProvider.of<ShoppingListBloc>(context).state
         is ShoppingListLoaded) {
+      print("Adding new item: $title");
       _textEditingController.clear();
       BlocProvider.of<ShoppingListBloc>(context)
           .add(AddItemToShoppingListEvent(title));
+      setState(() {});
     }
   }
 
