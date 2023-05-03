@@ -67,24 +67,11 @@ class _HomeBodyState extends State<HomeBody> {
                   child: Text("Get shopping list"),
                 ),
               ));
-            } else if (state is ShoppingListLoaded) {
-              return ShoppingListWidget(
-                //items: state.shoppingList.items,
-                //onDelete: onDeleteItem,
-              );
-            } else if (state is ShoppingListLoading) {
-              return const Placeholder(
-                child: Text('Loading state'),
-              );
-            } else if (state is ShoppingListError) {
-              return Placeholder(
-                child: Text(
-                    'Error state: ${(state as ShoppingListError).message}'),
-              );
             } else {
-              return const Placeholder(
-                child: Text('Else state'),
-              );
+              return ShoppingListWidget(
+                  //items: state.shoppingList.items,
+                  //onDelete: onDeleteItem,
+                  );
             }
           },
         ),
