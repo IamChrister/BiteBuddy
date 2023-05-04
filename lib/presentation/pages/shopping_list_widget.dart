@@ -1,5 +1,6 @@
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
+import 'package:bite_buddy/presentation/pages/list_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
@@ -19,6 +20,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
         .add(UpdateShoppingListEvent(ShoppingList(items: _items)));
   }
 
+  //TODO: Add a small loading icon as the last item in the list if the shoppinglist is not loaded.
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -31,36 +33,12 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
             itemCount: _items.length,
             itemBuilder: (context, index) {
               final item = _items[index];
-              return Dismissible(
-                key: ValueKey(item.hashCode),
-                direction: DismissDirection.endToStart,
-                background: Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 20),
-                  color: Colors.red,
-                  child: const Icon(Icons.delete, color: Colors.white),
-                ),
-                onDismissed: (direction) {
-                  _items.removeAt(index);
-                  onUpdateShoppingList();
-                  setState(() {});
-                },
-                child: ListTile(
-                  onTap: () {
-                    setState(() {
-                      _items[index] = item.toggleCollected();
-                    });
-                    onUpdateShoppingList();
-                  },
-                  title: Text(
-                    item.title,
-                    style: TextStyle(
-                        color: item.collected ? Colors.grey : Colors.black,
-                        decoration:
-                            item.collected ? TextDecoration.lineThrough : null),
-                  ),
-                ),
-              );
+              return ListItemWidget(
+                  key: ValueKey(item.hashCode),
+                  item: item,
+                  index: index,
+                  onDismissed: onDismissed,
+                  onTap: onTap);
             },
             onReorder: (int oldIndex, int newIndex) {
               setState(() {
@@ -71,11 +49,25 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                 _items.insert(newIndex, item);
               });
 
-              onUpdateShoppingList();
+              //onUpdateShoppingList();
             },
           );
         },
       ),
     );
+  }
+
+  void onDismissed(int index) {
+    setState(() {
+      _items.removeAt(index);
+    });
+    onUpdateShoppingList();
+  }
+
+  void onTap(index, item) {
+    setState(() {
+      _items[index] = item.toggleCollected();
+    });
+    //onUpdateShoppingList();
   }
 }

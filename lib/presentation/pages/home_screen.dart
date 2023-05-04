@@ -21,31 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .add(UpdateShoppingListEvent(const ShoppingList(items: [])));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Bite Buddy"),
-        actions: [
-          IconButton(
-              onPressed: _clearShoppingList, icon: const Icon(Icons.clear))
-        ],
-      ),
-      body: const HomeBody(),
-    );
-  }
-}
-
-class HomeBody extends StatefulWidget {
-  const HomeBody({
-    super.key,
-  });
-
-  @override
-  State<HomeBody> createState() => _HomeBodyState();
-}
-
-class _HomeBodyState extends State<HomeBody> {
   void dispatchGetShoppingList() {
     BlocProvider.of<ShoppingListBloc>(context).add(StreamShoppingListEvent());
   }
@@ -59,31 +34,21 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(children: [
-        // List display area
-        BlocBuilder<ShoppingListBloc, ShoppingListState>(
-          // Here is how we get access to the bloc
-          builder: (context, state) {
-            if (state is ShoppingListInitial) {
-              return Expanded(
-                  child: Placeholder(
-                child: TextButton(
-                  onPressed: dispatchGetShoppingList,
-                  child: const Text("Get shopping list"),
-                ),
-              ));
-            } else {
-              return const ShoppingListWidget(
-                  //items: state.shoppingList.items,
-                  //onDelete: onDeleteItem,
-                  );
-            }
-          },
-        ),
-        const AddListItemWidget(),
-      ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Bite Buddy"),
+        actions: [
+          IconButton(
+              onPressed: _clearShoppingList, icon: const Icon(Icons.clear))
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(children: const [
+          ShoppingListWidget(),
+          AddListItemWidget(),
+        ]),
+      ),
     );
   }
 }
