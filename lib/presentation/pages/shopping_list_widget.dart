@@ -13,11 +13,14 @@ class ShoppingListWidget extends StatefulWidget {
 }
 
 class _ShoppingListWidgetState extends State<ShoppingListWidget> {
-  late List<ListItem> _items = [];
+  List<ListItem> _items = [];
 
   void onUpdateShoppingList() {
-    BlocProvider.of<ShoppingListBloc>(context)
-        .add(UpdateShoppingListEvent(ShoppingList(items: _items)));
+    if (BlocProvider.of<ShoppingListBloc>(context).state
+        is! ShoppingListLoading) {
+      BlocProvider.of<ShoppingListBloc>(context)
+          .add(UpdateShoppingListEvent(ShoppingList(items: _items)));
+    }
   }
 
   //TODO: Add a small loading icon as the last item in the list if the shoppinglist is not loaded.
@@ -26,31 +29,46 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
     return Expanded(
       child: BlocBuilder<ShoppingListBloc, ShoppingListState>(
         builder: (context, state) {
-          if (state is ShoppingListLoaded) {
-            _items = state.shoppingList.items;
-          }
-          return ReorderableListView.builder(
-            itemCount: _items.length,
-            itemBuilder: (context, index) {
-              final item = _items[index];
-              return ListItemWidget(
-                  key: ValueKey(item.hashCode),
-                  item: item,
-                  index: index,
-                  onDismissed: onDismissed,
-                  onTap: onTap);
-            },
-            onReorder: (int oldIndex, int newIndex) {
-              setState(() {
-                if (newIndex > oldIndex) {
-                  newIndex -= 1;
-                }
-                final ListItem item = _items.removeAt(oldIndex);
-                _items.insert(newIndex, item);
-              });
+          _items =
+              BlocProvider.of<ShoppingListBloc>(context).shoppingList.items;
 
-              //onUpdateShoppingList();
-            },
+          bool _isLoading = state is ShoppingListLoading;
+
+          return Stack(
+            children: [
+              ReorderableListView.builder(
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  final item = _items[index];
+                  return ListItemWidget(
+                      key: ValueKey(item.hashCode),
+                      item: item,
+                      index: index,
+                      onDismissed: onDismissed,
+                      onTap: onTap);
+                },
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(() {
+                    if (newIndex > oldIndex) {
+                      newIndex -= 1;
+                    }
+                    final ListItem item = _items.removeAt(oldIndex);
+                    _items.insert(newIndex, item);
+                  });
+
+                  //onUpdateShoppingList();
+                },
+              ),
+              _isLoading
+                  ? Positioned.fill(
+                      child: Container(
+                      color: Colors.white.withOpacity(0.6),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ))
+                  : Container(),
+            ],
           );
         },
       ),
@@ -58,16 +76,22 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
   }
 
   void onDismissed(int index) {
-    setState(() {
-      _items.removeAt(index);
-    });
-    onUpdateShoppingList();
+    if (BlocProvider.of<ShoppingListBloc>(context).state
+        is! ShoppingListLoading) {
+      setState(() {
+        _items.removeAt(index);
+      });
+      onUpdateShoppingList();
+    }
   }
 
   void onTap(index, item) {
-    setState(() {
-      _items[index] = item.toggleCollected();
-    });
-    //onUpdateShoppingList();
+    if (BlocProvider.of<ShoppingListBloc>(context).state
+        is! ShoppingListLoading) {
+      setState(() {
+        _items[index] = item.toggleCollected();
+      });
+      onUpdateShoppingList();
+    }
   }
 }

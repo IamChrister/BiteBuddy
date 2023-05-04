@@ -17,8 +17,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void _clearShoppingList() {
-    BlocProvider.of<ShoppingListBloc>(context)
-        .add(UpdateShoppingListEvent(const ShoppingList(items: [])));
+    if (BlocProvider.of<ShoppingListBloc>(context).state
+        is! ShoppingListLoading) {
+      BlocProvider.of<ShoppingListBloc>(context)
+          .add(UpdateShoppingListEvent(const ShoppingList(items: [])));
+    }
   }
 
   void dispatchGetShoppingList() {

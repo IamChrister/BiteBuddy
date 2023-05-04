@@ -14,8 +14,8 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   String inputStr = "";
 
   void _addItem(String title) {
-    if (BlocProvider.of<ShoppingListBloc>(context).state
-        is ShoppingListLoaded) {
+    ShoppingListState state = BlocProvider.of<ShoppingListBloc>(context).state;
+    if (state is! ShoppingListLoading) {
       _textEditingController.clear();
       BlocProvider.of<ShoppingListBloc>(context)
           .add(AddItemToShoppingListEvent(title));
@@ -25,24 +25,41 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: TextField(
-            controller: _textEditingController,
-            decoration: const InputDecoration(hintText: 'Add new item...'),
-            onChanged: (value) {
-              inputStr = value;
-            },
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            if (_textEditingController.text.isNotEmpty) {
-              _addItem(inputStr);
-            }
-          },
-          icon: const Icon(Icons.add),
+        // Handle the error messages here if needed
+        BlocBuilder<ShoppingListBloc, ShoppingListState>(
+            builder: (context, state) {
+          if (state is ShoppingListError) {
+            String errorMsg = state.message;
+            return (Text(
+              errorMsg,
+              style: TextStyle(color: Colors.red),
+            ));
+          } else {
+            return Container();
+          }
+        }),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _textEditingController,
+                decoration: const InputDecoration(hintText: 'Add new item...'),
+                onChanged: (value) {
+                  inputStr = value;
+                },
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (_textEditingController.text.isNotEmpty) {
+                  _addItem(inputStr);
+                }
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
         ),
       ],
     );

@@ -26,6 +26,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final StreamShoppingListUsecase streamShoppingList;
   final InputConverter inputConverter;
 
+  ShoppingList _shoppingList = const ShoppingList(items: []);
+
   ShoppingListBloc(
       {required this.getShoppingList,
       required this.updateShoppingList,
@@ -43,6 +45,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   }
 
   ShoppingListState get initialState => ShoppingListInitial();
+  ShoppingList get shoppingList => _shoppingList;
 
   FutureOr<void> _onStreamShoppingListEvent(
       StreamShoppingListEvent event, Emitter<ShoppingListState> emit) async {
@@ -52,6 +55,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
         if (event.data != null && jsonDecode(event.data!)["data"] != null) {
           ShoppingList shoppingList =
               ShoppingListModel.fromJson(jsonDecode(event.data!)["data"]);
+
           add(ShoppingListLoadedFromStreamEvent(shoppingList: shoppingList));
         } else {
           add(ShoppingListLoadedFromStreamEvent(
@@ -65,6 +69,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   Future<void> _onShoppingListLoadedFromStreamEvent(
       ShoppingListLoadedFromStreamEvent event,
       Emitter<ShoppingListState> emit) async {
+    _shoppingList = event.shoppingList;
     emit(ShoppingListLoaded(shoppingList: event.shoppingList));
   }
 
@@ -75,6 +80,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     result.fold(
         (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
         (shoppingList) {
+      _shoppingList = shoppingList;
       emit(ShoppingListLoaded(shoppingList: shoppingList));
     });
   }
@@ -82,24 +88,23 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   Future<void> _onDeleteItemFromShoppingListEvent(
       DeleteItemFromShoppingListEvent event,
       Emitter<ShoppingListState> emit) async {
-    if (state is ShoppingListLoaded) {
-      final result = deleteItemFromShoppingList(
-          (state as ShoppingListLoaded).shoppingList, event.item);
+    final result = deleteItemFromShoppingList(_shoppingList, event.item);
 
-      result.fold(
-          (failure) =>
-              emit(ShoppingListError(message: ITEM_NOT_FOUND_FAILURE_MESSAGE)),
-          (res) async {
-        emit(ShoppingListLoading());
+    result.fold(
+        (failure) =>
+            emit(ShoppingListError(message: ITEM_NOT_FOUND_FAILURE_MESSAGE)),
+        (res) async {
+      emit(ShoppingListLoading());
 
-        final updated = await updateShoppingList(res);
+      final updated = await updateShoppingList(res);
 
-        updated.fold(
-            (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
-            (newShoppingList) =>
-                emit(ShoppingListLoaded(shoppingList: newShoppingList)));
+      updated.fold(
+          (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
+          (newShoppingList) {
+        emit(ShoppingListLoaded(shoppingList: newShoppingList));
+        _shoppingList = newShoppingList;
       });
-    }
+    });
   }
 
   Future<void> _onUpdateShoppingListEvent(
@@ -111,6 +116,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     updateResult.fold(
         (failure) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
         (result) {
+      _shoppingList = result;
       emit(ShoppingListLoaded(shoppingList: result));
     });
   }
@@ -118,11 +124,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   /// Event that runs when an item is added to the shopping list
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
-    ShoppingList currentShoppingList = const ShoppingList(items: []);
-    if (state is ShoppingListLoaded) {
-      currentShoppingList = (state as ShoppingListLoaded).shoppingList;
-    }
-    final result = addItemToShoppingList(currentShoppingList, event.newItem);
+    final result = addItemToShoppingList(_shoppingList, event.newItem);
 
     await result.fold((failure) {
       emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
@@ -132,8 +134,10 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
 
       updated.fold(
           (error) => emit(ShoppingListError(message: SERVER_FAILURE_MESSAGE)),
-          (newShoppingList) =>
-              emit(ShoppingListLoaded(shoppingList: newShoppingList)));
+          (newShoppingList) {
+        emit(ShoppingListLoaded(shoppingList: newShoppingList));
+        _shoppingList = newShoppingList;
+      });
     });
   }
 }
