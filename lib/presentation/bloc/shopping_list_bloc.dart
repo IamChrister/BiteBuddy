@@ -55,7 +55,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
           add(ShoppingListLoadedFromStreamEvent(shoppingList: shoppingList));
         } else {
           add(ShoppingListLoadedFromStreamEvent(
-              shoppingList: ShoppingList(items: [])));
+              shoppingList: const ShoppingList(items: [])));
         }
       }
       //ShoppingList.
@@ -124,8 +124,6 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   /// Event that runs when an item is added to the shopping list
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
-    //TODO: Handle what happens if the item with the same title is added again
-
     ShoppingList currentShoppingList = const ShoppingList(items: []);
     if (state is ShoppingListLoaded) {
       currentShoppingList = (state as ShoppingListLoaded).shoppingList;

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
@@ -19,11 +17,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import '../../features/shopping_list/data/datasources/shopping_list_datasource_test.mocks.dart';
-import '../../fixtures/fixture_reader.dart';
 import 'shopping_list_bloc_test.mocks.dart';
 
 // Here we're mostly testing if the states are emitted as expected
-
 @GenerateMocks([
   GetShoppingListUsecase,
   UpdateShoppingListUsecase,
@@ -134,7 +130,7 @@ void main() {
           },
           expect: () =>
               //TODO: Why is this SHoppingListLoaded, not ShoppingListLoadedFromStreamEvent?
-              [ShoppingListLoaded(shoppingList: ShoppingList(items: []))]);
+              [ShoppingListLoaded(shoppingList: const ShoppingList(items: []))]);
     });
 
     group('getShoppingList', () {

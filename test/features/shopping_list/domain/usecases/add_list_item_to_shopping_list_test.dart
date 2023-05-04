@@ -20,7 +20,6 @@ void main() {
   });
 
   group('AddListItemToShoppingList', () {
-    //TODO: Test with more cases
     ShoppingList tShoppingList = const ShoppingList(items: []);
     ListItem tListItem =
         const ListItem(id: "1", title: "test item 1", collected: false);

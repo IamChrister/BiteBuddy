@@ -9,6 +9,11 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   group('ShoppingListModel', () {
+    const tShoppingListModel = ShoppingListModel(items: [
+      ListItemModel(id: "1", title: "test item 1", collected: false),
+      ListItemModel(id: "2", title: "test item 2", collected: true)
+    ]);
+
     test('should be a subclass of ShoppingList entity', () async {
       // Arrange
       var tShoppingListModel = const ShoppingListModel(
@@ -26,11 +31,7 @@ void main() {
         final List<dynamic> jsonMap =
             json.decode(fixture('shopping_list.json'));
 
-//TODO: Refactor
-        var expected = const ShoppingListModel(items: [
-          ListItemModel(id: "1", title: "test item 1", collected: false),
-          ListItemModel(id: "2", title: "test item 2", collected: true)
-        ]);
+        var expected = tShoppingListModel;
 
         // Act
         final actual = ShoppingListModel.fromJson(jsonMap);
@@ -58,10 +59,6 @@ void main() {
     group('toJson', () {
       test('should return a JSON map containing the proper data', () async {
         // Arrange
-        ShoppingListModel tShoppingListModel = const ShoppingListModel(items: [
-          ListItemModel(id: "1", title: "test item 1", collected: false),
-          ListItemModel(id: "2", title: "test item 2", collected: true)
-        ]);
 
         final expected = [
           {"id": "1", "title": "test item 1", "collected": false},
