@@ -11,15 +11,13 @@ import 'package:mockito/mockito.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'shopping_list_datasource_test.mocks.dart';
 
-@GenerateMocks([http.Client, EventSource])
+@GenerateMocks([http.Client])
 void main() {
   late ShoppingListDatasourceImpl sut;
   late MockClient mockClient;
-  late MockEventSource mockEventSource;
 
   setUp(() {
     mockClient = MockClient();
-    mockEventSource = MockEventSource();
     sut = ShoppingListDatasourceImpl(client: mockClient);
   });
 
