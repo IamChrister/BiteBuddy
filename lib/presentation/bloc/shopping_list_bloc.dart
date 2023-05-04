@@ -82,12 +82,6 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   Future<void> _onDeleteItemFromShoppingListEvent(
       DeleteItemFromShoppingListEvent event,
       Emitter<ShoppingListState> emit) async {
-    /// Should
-    /// 1. Delete the item from shoppinglist
-    /// 2. Should emit [Error] if the item is not in the shopping list
-    /// 3. Update the shopping list to a new state and emit [ShoppingListLoaded on success]
-    /// 4. Emit [Error] if the server update fails
-
     if (state is ShoppingListLoaded) {
       final result = deleteItemFromShoppingList(
           (state as ShoppingListLoaded).shoppingList, event.item);

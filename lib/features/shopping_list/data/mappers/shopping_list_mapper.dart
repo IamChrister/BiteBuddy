@@ -4,7 +4,6 @@ import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.da
 
 class ShoppingListMapper {
   ShoppingListModel entityToModel(ShoppingList shoppingList) {
-    print("Entity to model: $shoppingList");
     List<ListItemModel> items = shoppingList.items
         .map((item) => ListItemModel(
             id: item.id, title: item.title, collected: item.collected))

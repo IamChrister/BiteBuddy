@@ -37,14 +37,15 @@ void main() {
   }
 
   group('shoppingListDatasource', () {
-    //TODO: unsure of what to test here
     group('streamShoppingList', () {
-      test('should ', () async {
+      test('should return an Eventsource object', () async {
         // Arrange
 
         // Act
+        final result = await sut.streamShoppingList();
 
         // Assert
+        expect(result, isA<EventSource>());
       });
     });
 

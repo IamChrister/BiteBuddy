@@ -61,7 +61,6 @@ class ShoppingListDatasourceImpl implements ShoppingListDatasource {
 
   @override
   Future<EventSource> streamShoppingList() async {
-    final eventSourceUrl = realtimeDatabaseUrl;
-    return await EventSource.connect(Uri.parse(eventSourceUrl));
+    return await EventSource.connect(Uri.parse(realtimeDatabaseUrl));
   }
 }

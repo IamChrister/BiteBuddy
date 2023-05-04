@@ -23,4 +23,4 @@ flutter test
 
 ## Notes
 ### Weak spots/areas to look for errors
-- Handling of streams in bloc
+- Handling of streams in bloc & testing them

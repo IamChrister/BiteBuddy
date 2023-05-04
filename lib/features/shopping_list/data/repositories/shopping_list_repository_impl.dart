@@ -34,7 +34,7 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   }
 
   @override
-  Future<EventSource> streamShoppingList() {
-    return shoppingListDatasource.streamShoppingList();
+  Future<EventSource> streamShoppingList() async {
+    return await shoppingListDatasource.streamShoppingList();
   }
 }

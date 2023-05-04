@@ -17,7 +17,6 @@ class AddListItemToShoppingListUsecase {
     final result = inputConverter.stringToListItem(itemString);
     return result.fold((failure) => Left(InvalidInputFailure()), (listItem) {
       // Cannot add to immutable list so we'll create a new one.
-      print("New item: $listItem");
       List<ListItem> items = List.from(shoppingList.items);
       items.add(listItem);
 

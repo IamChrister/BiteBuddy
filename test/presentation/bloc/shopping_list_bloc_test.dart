@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/core/util/input_converter.dart';
+import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import '../../features/shopping_list/data/datasources/shopping_list_datasource_test.mocks.dart';
+import '../../fixtures/fixture_reader.dart';
 import 'shopping_list_bloc_test.mocks.dart';
 
 // Here we're mostly testing if the states are emitted as expected
@@ -109,11 +112,9 @@ void main() {
       expect(sut.initialState, ShoppingListInitial());
     });
 
-    //TODO: unsure of what to test here
     group('streamShoppingList', () {
-      //TODO: Try different data formats
       blocTest<ShoppingListBloc, ShoppingListState>(
-          'should emit [ShoppingListLoadedFromStreamEvent] when a "put" event is received',
+          'should emit [ShoppingListLoaded] with an empty shopping list when a "put" event is received with no data',
           build: () => sut,
           act: (bloc) async {
             when(mockStreamShoppingListUsecase())
@@ -121,7 +122,6 @@ void main() {
             when(mockEventSource.listen((any))).thenAnswer((realInvocation) {
               final onEvent =
                   realInvocation.positionalArguments[0] as void Function(Event);
-              //TODO: Continue here, not sure what the data should be
               onEvent(Event(event: "put", id: ""));
               return StreamController<Event>().stream.listen((event) {});
             });
@@ -129,8 +129,33 @@ void main() {
             bloc.add(StreamShoppingListEvent());
           },
           expect: () =>
-              //TODO: Why is this SHoppingListLoaded, not ShoppingListLoadedFromStreamEvent?
-              [ShoppingListLoaded(shoppingList: const ShoppingList(items: []))]);
+              // The state emitted
+              [
+                ShoppingListLoaded(shoppingList: const ShoppingList(items: []))
+              ]);
+
+      var jsonStr = fixture('shopping_list.json');
+      Map<String, ShoppingList> expected = {
+        "data": ShoppingListModel.fromJson(jsonDecode(jsonStr))
+      };
+      blocTest<ShoppingListBloc, ShoppingListState>(
+          'should emit [ShoppingListLoaded] with a shopping list when a "put" event is received with data',
+          build: () => sut,
+          act: (bloc) async {
+            when(mockStreamShoppingListUsecase())
+                .thenAnswer((realInvocation) async => mockEventSource);
+            when(mockEventSource.listen((any))).thenAnswer((realInvocation) {
+              final onEvent =
+                  realInvocation.positionalArguments[0] as void Function(Event);
+              onEvent(Event(event: "put", data: jsonEncode(expected), id: ""));
+              return StreamController<Event>().stream.listen((event) {});
+            });
+
+            bloc.add(StreamShoppingListEvent());
+          },
+          expect: () =>
+              // The state emitted
+              [ShoppingListLoaded(shoppingList: expected["data"]!)]);
     });
 
     group('getShoppingList', () {

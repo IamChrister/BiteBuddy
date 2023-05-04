@@ -1,9 +1,11 @@
+import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/core/error/exceptions.dart';
 import 'package:bite_buddy/core/error/failures.dart';
 import 'package:bite_buddy/features/shopping_list/data/datasources/shopping_list_datasource.dart';
 import 'package:bite_buddy/features/shopping_list/data/models/list_item_model.dart';
 import 'package:bite_buddy/features/shopping_list/data/models/shopping_list_model.dart';
 import 'package:bite_buddy/features/shopping_list/data/repositories/shopping_list_repository_impl.dart';
+import 'package:eventsource/eventsource.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -21,14 +23,19 @@ void main() {
   });
 
   group('ShoppingListRepositoryImpl', () {
-    //TODO: unsure of what to test here
     group('streamShoppingList', () {
-      test('should ', () async {
+      test('should return an EventSource object', () async {
         // Arrange
+        when(mockShoppingListDatasource.streamShoppingList()).thenAnswer(
+            (realInvocation) =>
+                EventSource.connect(Uri.parse(realtimeDatabaseUrl)));
 
         // Act
+        final result = await sut.streamShoppingList();
 
         // Assert
+        expect(result, isA<EventSource>());
+        verify(mockShoppingListDatasource.streamShoppingList());
       });
     });
 
