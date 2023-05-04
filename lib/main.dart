@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'presentation/bloc/shopping_list_bloc.dart';
+import 'presentation/pages/home_screen.dart';
+import 'injection_container.dart' as dependency_injection;
 
 void main() {
-  runApp(const ShoppingListApp());
+  dependency_injection.init();
+  runApp(BlocProvider(
+      create: (context) => dependency_injection.sl<ShoppingListBloc>(),
+      child: const ShoppingListApp()));
 }
 
 class ShoppingListApp extends StatelessWidget {
@@ -13,7 +19,7 @@ class ShoppingListApp extends StatelessWidget {
     return MaterialApp(
       title: 'BiteBuddy',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomeScreen(),

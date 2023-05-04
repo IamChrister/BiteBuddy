@@ -1,0 +1,12 @@
+[
+    {
+        "id": "1",
+        "collected": false,
+        "title": "test item 1"
+    },
+    {
+        "id": "2",
+        "collected": true,
+        "title": "test item 2"
+    }
+]
