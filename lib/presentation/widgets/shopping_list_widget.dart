@@ -31,8 +31,6 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
           if (state is ShoppingListLoaded) {
             _items = state.shoppingList.items;
           }
-          // _items =
-          //     BlocProvider.of<ShoppingListBloc>(context).shoppingList.items;
 
           bool isLoading = state is ShoppingListLoading;
 
@@ -58,7 +56,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                     _items.insert(newIndex, item);
                   });
 
-                  //onUpdateShoppingList();
+                  onUpdateShoppingList();
                 },
               ),
               isLoading
