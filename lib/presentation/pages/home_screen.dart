@@ -1,7 +1,7 @@
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
-import 'package:bite_buddy/presentation/pages/add_list_item_widget.dart';
-import 'package:bite_buddy/presentation/pages/shopping_list_widget.dart';
+import 'package:bite_buddy/presentation/widgets/add_list_item_widget.dart';
+import 'package:bite_buddy/presentation/widgets/shopping_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

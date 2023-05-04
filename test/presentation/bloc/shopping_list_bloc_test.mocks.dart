@@ -5,26 +5,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
 
-import 'package:bite_buddy/core/error/failures.dart' as _i8;
+import 'package:bite_buddy/core/error/failures.dart' as _i9;
 import 'package:bite_buddy/core/util/input_converter.dart' as _i4;
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart'
-    as _i13;
+    as _i14;
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart'
-    as _i9;
+    as _i10;
 import 'package:bite_buddy/features/shopping_list/domain/repositories/shopping_list_repository.dart'
     as _i2;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/add_list_item_to_shopping_list.dart'
-    as _i11;
-import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart'
     as _i12;
+import 'package:bite_buddy/features/shopping_list/domain/usecases/delete_item_from_shopping_list.dart'
+    as _i13;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/get_shopping_list.dart'
-    as _i6;
+    as _i8;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/stream_shopping_list.dart'
-    as _i14;
+    as _i15;
 import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shopping_list.dart'
-    as _i10;
+    as _i11;
 import 'package:dartz/dartz.dart' as _i3;
 import 'package:eventsource/eventsource.dart' as _i5;
+import 'package:http/http.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -80,11 +81,62 @@ class _FakeEventSource_3 extends _i1.SmartFake implements _i5.EventSource {
         );
 }
 
+class _FakeUri_4 extends _i1.SmartFake implements Uri {
+  _FakeUri_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeClient_5 extends _i1.SmartFake implements _i6.Client {
+  _FakeClient_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeEvent_6 extends _i1.SmartFake implements _i5.Event {
+  _FakeEvent_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeStreamSubscription_7<T> extends _i1.SmartFake
+    implements _i7.StreamSubscription<T> {
+  _FakeStreamSubscription_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFuture_8<T> extends _i1.SmartFake implements _i7.Future<T> {
+  _FakeFuture_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GetShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetShoppingListUsecase extends _i1.Mock
-    implements _i6.GetShoppingListUsecase {
+    implements _i8.GetShoppingListUsecase {
   MockGetShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -98,29 +150,29 @@ class MockGetShoppingListUsecase extends _i1.Mock
         ),
       ) as _i2.ShoppingListRepository);
   @override
-  _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>> call() =>
+  _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>> call() =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [],
         ),
         returnValue:
-            _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>.value(
-                _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
+            _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>>.value(
+                _FakeEither_1<_i9.Failure, _i10.ShoppingList>(
           this,
           Invocation.method(
             #call,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>);
+      ) as _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>>);
 }
 
 /// A class which mocks [UpdateShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockUpdateShoppingListUsecase extends _i1.Mock
-    implements _i10.UpdateShoppingListUsecase {
+    implements _i11.UpdateShoppingListUsecase {
   MockUpdateShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -134,30 +186,30 @@ class MockUpdateShoppingListUsecase extends _i1.Mock
         ),
       ) as _i2.ShoppingListRepository);
   @override
-  _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>> call(
-          _i9.ShoppingList? shoppingList) =>
+  _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>> call(
+          _i10.ShoppingList? shoppingList) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [shoppingList],
         ),
         returnValue:
-            _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>.value(
-                _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
+            _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>>.value(
+                _FakeEither_1<_i9.Failure, _i10.ShoppingList>(
           this,
           Invocation.method(
             #call,
             [shoppingList],
           ),
         )),
-      ) as _i7.Future<_i3.Either<_i8.Failure, _i9.ShoppingList>>);
+      ) as _i7.Future<_i3.Either<_i9.Failure, _i10.ShoppingList>>);
 }
 
 /// A class which mocks [AddListItemToShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAddListItemToShoppingListUsecase extends _i1.Mock
-    implements _i11.AddListItemToShoppingListUsecase {
+    implements _i12.AddListItemToShoppingListUsecase {
   MockAddListItemToShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -171,8 +223,8 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
         ),
       ) as _i4.InputConverter);
   @override
-  _i3.Either<_i8.Failure, _i9.ShoppingList> call(
-    _i9.ShoppingList? shoppingList,
+  _i3.Either<_i9.Failure, _i10.ShoppingList> call(
+    _i10.ShoppingList? shoppingList,
     String? itemString,
   ) =>
       (super.noSuchMethod(
@@ -183,7 +235,7 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
             itemString,
           ],
         ),
-        returnValue: _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
+        returnValue: _FakeEither_1<_i9.Failure, _i10.ShoppingList>(
           this,
           Invocation.method(
             #call,
@@ -193,22 +245,22 @@ class MockAddListItemToShoppingListUsecase extends _i1.Mock
             ],
           ),
         ),
-      ) as _i3.Either<_i8.Failure, _i9.ShoppingList>);
+      ) as _i3.Either<_i9.Failure, _i10.ShoppingList>);
 }
 
 /// A class which mocks [DeleteItemFromShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
-    implements _i12.DeleteItemFromShoppingListUsecase {
+    implements _i13.DeleteItemFromShoppingListUsecase {
   MockDeleteItemFromShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Either<_i8.Failure, _i9.ShoppingList> call(
-    _i9.ShoppingList? shoppingList,
-    _i13.ListItem? item,
+  _i3.Either<_i9.Failure, _i10.ShoppingList> call(
+    _i10.ShoppingList? shoppingList,
+    _i14.ListItem? item,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -218,7 +270,7 @@ class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
             item,
           ],
         ),
-        returnValue: _FakeEither_1<_i8.Failure, _i9.ShoppingList>(
+        returnValue: _FakeEither_1<_i9.Failure, _i10.ShoppingList>(
           this,
           Invocation.method(
             #call,
@@ -228,14 +280,14 @@ class MockDeleteItemFromShoppingListUsecase extends _i1.Mock
             ],
           ),
         ),
-      ) as _i3.Either<_i8.Failure, _i9.ShoppingList>);
+      ) as _i3.Either<_i9.Failure, _i10.ShoppingList>);
 }
 
 /// A class which mocks [StreamShoppingListUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStreamShoppingListUsecase extends _i1.Mock
-    implements _i14.StreamShoppingListUsecase {
+    implements _i15.StreamShoppingListUsecase {
   MockStreamShoppingListUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -264,6 +316,480 @@ class MockStreamShoppingListUsecase extends _i1.Mock
       ) as _i7.Future<_i5.EventSource>);
 }
 
+/// A class which mocks [EventSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockEventSource extends _i1.Mock implements _i5.EventSource {
+  MockEventSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  Uri get url => (super.noSuchMethod(
+        Invocation.getter(#url),
+        returnValue: _FakeUri_4(
+          this,
+          Invocation.getter(#url),
+        ),
+      ) as Uri);
+  @override
+  _i6.Client get client => (super.noSuchMethod(
+        Invocation.getter(#client),
+        returnValue: _FakeClient_5(
+          this,
+          Invocation.getter(#client),
+        ),
+      ) as _i6.Client);
+  @override
+  set client(_i6.Client? _client) => super.noSuchMethod(
+        Invocation.setter(
+          #client,
+          _client,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i5.EventSourceReadyState get readyState => (super.noSuchMethod(
+        Invocation.getter(#readyState),
+        returnValue: _i5.EventSourceReadyState.CONNECTING,
+      ) as _i5.EventSourceReadyState);
+  @override
+  _i7.Stream<_i5.Event> get onOpen => (super.noSuchMethod(
+        Invocation.getter(#onOpen),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> get onMessage => (super.noSuchMethod(
+        Invocation.getter(#onMessage),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> get onError => (super.noSuchMethod(
+        Invocation.getter(#onError),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  bool get isBroadcast => (super.noSuchMethod(
+        Invocation.getter(#isBroadcast),
+        returnValue: false,
+      ) as bool);
+  @override
+  _i7.Future<int> get length => (super.noSuchMethod(
+        Invocation.getter(#length),
+        returnValue: _i7.Future<int>.value(0),
+      ) as _i7.Future<int>);
+  @override
+  _i7.Future<bool> get isEmpty => (super.noSuchMethod(
+        Invocation.getter(#isEmpty),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+  @override
+  _i7.Future<_i5.Event> get first => (super.noSuchMethod(
+        Invocation.getter(#first),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.getter(#first),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> get last => (super.noSuchMethod(
+        Invocation.getter(#last),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.getter(#last),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> get single => (super.noSuchMethod(
+        Invocation.getter(#single),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.getter(#single),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.StreamSubscription<_i5.Event> listen(
+    void Function(_i5.Event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #listen,
+          [onData],
+          {
+            #onError: onError,
+            #onDone: onDone,
+            #cancelOnError: cancelOnError,
+          },
+        ),
+        returnValue: _FakeStreamSubscription_7<_i5.Event>(
+          this,
+          Invocation.method(
+            #listen,
+            [onData],
+            {
+              #onError: onError,
+              #onDone: onDone,
+              #cancelOnError: cancelOnError,
+            },
+          ),
+        ),
+      ) as _i7.StreamSubscription<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> asBroadcastStream({
+    void Function(_i7.StreamSubscription<_i5.Event>)? onListen,
+    void Function(_i7.StreamSubscription<_i5.Event>)? onCancel,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #asBroadcastStream,
+          [],
+          {
+            #onListen: onListen,
+            #onCancel: onCancel,
+          },
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> where(bool Function(_i5.Event)? test) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #where,
+          [test],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<S> map<S>(S Function(_i5.Event)? convert) => (super.noSuchMethod(
+        Invocation.method(
+          #map,
+          [convert],
+        ),
+        returnValue: _i7.Stream<S>.empty(),
+      ) as _i7.Stream<S>);
+  @override
+  _i7.Stream<E> asyncMap<E>(_i7.FutureOr<E> Function(_i5.Event)? convert) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #asyncMap,
+          [convert],
+        ),
+        returnValue: _i7.Stream<E>.empty(),
+      ) as _i7.Stream<E>);
+  @override
+  _i7.Stream<E> asyncExpand<E>(_i7.Stream<E>? Function(_i5.Event)? convert) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #asyncExpand,
+          [convert],
+        ),
+        returnValue: _i7.Stream<E>.empty(),
+      ) as _i7.Stream<E>);
+  @override
+  _i7.Stream<_i5.Event> handleError(
+    Function? onError, {
+    bool Function(dynamic)? test,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #handleError,
+          [onError],
+          {#test: test},
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<S> expand<S>(Iterable<S> Function(_i5.Event)? convert) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #expand,
+          [convert],
+        ),
+        returnValue: _i7.Stream<S>.empty(),
+      ) as _i7.Stream<S>);
+  @override
+  _i7.Future<dynamic> pipe(_i7.StreamConsumer<_i5.Event>? streamConsumer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #pipe,
+          [streamConsumer],
+        ),
+        returnValue: _i7.Future<dynamic>.value(),
+      ) as _i7.Future<dynamic>);
+  @override
+  _i7.Stream<S> transform<S>(
+          _i7.StreamTransformer<_i5.Event, S>? streamTransformer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #transform,
+          [streamTransformer],
+        ),
+        returnValue: _i7.Stream<S>.empty(),
+      ) as _i7.Stream<S>);
+  @override
+  _i7.Future<_i5.Event> reduce(
+          _i5.Event Function(
+            _i5.Event,
+            _i5.Event,
+          )? combine) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #reduce,
+          [combine],
+        ),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.method(
+            #reduce,
+            [combine],
+          ),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<S> fold<S>(
+    S? initialValue,
+    S Function(
+      S,
+      _i5.Event,
+    )? combine,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fold,
+          [
+            initialValue,
+            combine,
+          ],
+        ),
+        returnValue: _FakeFuture_8<S>(
+          this,
+          Invocation.method(
+            #fold,
+            [
+              initialValue,
+              combine,
+            ],
+          ),
+        ),
+      ) as _i7.Future<S>);
+  @override
+  _i7.Future<String> join([String? separator = r'']) => (super.noSuchMethod(
+        Invocation.method(
+          #join,
+          [separator],
+        ),
+        returnValue: _i7.Future<String>.value(''),
+      ) as _i7.Future<String>);
+  @override
+  _i7.Future<bool> contains(Object? needle) => (super.noSuchMethod(
+        Invocation.method(
+          #contains,
+          [needle],
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+  @override
+  _i7.Future<dynamic> forEach(void Function(_i5.Event)? action) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #forEach,
+          [action],
+        ),
+        returnValue: _i7.Future<dynamic>.value(),
+      ) as _i7.Future<dynamic>);
+  @override
+  _i7.Future<bool> every(bool Function(_i5.Event)? test) => (super.noSuchMethod(
+        Invocation.method(
+          #every,
+          [test],
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+  @override
+  _i7.Future<bool> any(bool Function(_i5.Event)? test) => (super.noSuchMethod(
+        Invocation.method(
+          #any,
+          [test],
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+  @override
+  _i7.Stream<R> cast<R>() => (super.noSuchMethod(
+        Invocation.method(
+          #cast,
+          [],
+        ),
+        returnValue: _i7.Stream<R>.empty(),
+      ) as _i7.Stream<R>);
+  @override
+  _i7.Future<List<_i5.Event>> toList() => (super.noSuchMethod(
+        Invocation.method(
+          #toList,
+          [],
+        ),
+        returnValue: _i7.Future<List<_i5.Event>>.value(<_i5.Event>[]),
+      ) as _i7.Future<List<_i5.Event>>);
+  @override
+  _i7.Future<Set<_i5.Event>> toSet() => (super.noSuchMethod(
+        Invocation.method(
+          #toSet,
+          [],
+        ),
+        returnValue: _i7.Future<Set<_i5.Event>>.value(<_i5.Event>{}),
+      ) as _i7.Future<Set<_i5.Event>>);
+  @override
+  _i7.Future<E> drain<E>([E? futureValue]) => (super.noSuchMethod(
+        Invocation.method(
+          #drain,
+          [futureValue],
+        ),
+        returnValue: _FakeFuture_8<E>(
+          this,
+          Invocation.method(
+            #drain,
+            [futureValue],
+          ),
+        ),
+      ) as _i7.Future<E>);
+  @override
+  _i7.Stream<_i5.Event> take(int? count) => (super.noSuchMethod(
+        Invocation.method(
+          #take,
+          [count],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> takeWhile(bool Function(_i5.Event)? test) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #takeWhile,
+          [test],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> skip(int? count) => (super.noSuchMethod(
+        Invocation.method(
+          #skip,
+          [count],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> skipWhile(bool Function(_i5.Event)? test) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #skipWhile,
+          [test],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> distinct(
+          [bool Function(
+            _i5.Event,
+            _i5.Event,
+          )? equals]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #distinct,
+          [equals],
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> firstWhere(
+    bool Function(_i5.Event)? test, {
+    _i5.Event Function()? orElse,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #firstWhere,
+          [test],
+          {#orElse: orElse},
+        ),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.method(
+            #firstWhere,
+            [test],
+            {#orElse: orElse},
+          ),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> lastWhere(
+    bool Function(_i5.Event)? test, {
+    _i5.Event Function()? orElse,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #lastWhere,
+          [test],
+          {#orElse: orElse},
+        ),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.method(
+            #lastWhere,
+            [test],
+            {#orElse: orElse},
+          ),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> singleWhere(
+    bool Function(_i5.Event)? test, {
+    _i5.Event Function()? orElse,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #singleWhere,
+          [test],
+          {#orElse: orElse},
+        ),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.method(
+            #singleWhere,
+            [test],
+            {#orElse: orElse},
+          ),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Future<_i5.Event> elementAt(int? index) => (super.noSuchMethod(
+        Invocation.method(
+          #elementAt,
+          [index],
+        ),
+        returnValue: _i7.Future<_i5.Event>.value(_FakeEvent_6(
+          this,
+          Invocation.method(
+            #elementAt,
+            [index],
+          ),
+        )),
+      ) as _i7.Future<_i5.Event>);
+  @override
+  _i7.Stream<_i5.Event> timeout(
+    Duration? timeLimit, {
+    void Function(_i7.EventSink<_i5.Event>)? onTimeout,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #timeout,
+          [timeLimit],
+          {#onTimeout: onTimeout},
+        ),
+        returnValue: _i7.Stream<_i5.Event>.empty(),
+      ) as _i7.Stream<_i5.Event>);
+}
+
 /// A class which mocks [InputConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -273,18 +799,18 @@ class MockInputConverter extends _i1.Mock implements _i4.InputConverter {
   }
 
   @override
-  _i3.Either<_i8.Failure, _i13.ListItem> stringToListItem(String? str) =>
+  _i3.Either<_i9.Failure, _i14.ListItem> stringToListItem(String? str) =>
       (super.noSuchMethod(
         Invocation.method(
           #stringToListItem,
           [str],
         ),
-        returnValue: _FakeEither_1<_i8.Failure, _i13.ListItem>(
+        returnValue: _FakeEither_1<_i9.Failure, _i14.ListItem>(
           this,
           Invocation.method(
             #stringToListItem,
             [str],
           ),
         ),
-      ) as _i3.Either<_i8.Failure, _i13.ListItem>);
+      ) as _i3.Either<_i9.Failure, _i14.ListItem>);
 }

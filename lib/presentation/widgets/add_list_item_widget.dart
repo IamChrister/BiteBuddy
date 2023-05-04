@@ -34,7 +34,7 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
             String errorMsg = state.message;
             return (Text(
               errorMsg,
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ));
           } else {
             return Container();
@@ -44,6 +44,7 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
           children: [
             Expanded(
               child: TextField(
+                key: const Key("addItemField"),
                 controller: _textEditingController,
                 decoration: const InputDecoration(hintText: 'Add new item...'),
                 onChanged: (value) {
@@ -52,6 +53,7 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
               ),
             ),
             IconButton(
+              key: const Key("addItemButton"),
               onPressed: () {
                 if (_textEditingController.text.isNotEmpty) {
                   _addItem(inputStr);

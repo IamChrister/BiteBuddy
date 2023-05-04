@@ -29,6 +29,7 @@ import 'shopping_list_bloc_test.mocks.dart';
   AddListItemToShoppingListUsecase,
   DeleteItemFromShoppingListUsecase,
   StreamShoppingListUsecase,
+  EventSource,
   InputConverter
 ])
 void main() {
