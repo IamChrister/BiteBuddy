@@ -21,8 +21,11 @@ flutter test
 
 
 ## Notes
-### Out of scope
-- Offline usage
-- Authentication 
+### Scope
+- Offline usage not supported
+- Authentication not implemented
+- Limited widget testing
+- 1 integration test only 
+- Unit testing could be more thorough
 ### Weak spots/areas to look for errors
 - Handling of streams in bloc & testing them

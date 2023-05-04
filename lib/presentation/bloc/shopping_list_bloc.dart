@@ -128,6 +128,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
 
     await result.fold((failure) {
       emit(ShoppingListError(message: INVALID_INPUT_FAILURE_MESSAGE));
+      return;
     }, (result) async {
       emit(ShoppingListLoading());
       final updated = await updateShoppingList(result);

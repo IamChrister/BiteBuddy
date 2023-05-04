@@ -18,7 +18,6 @@ import 'package:eventsource/eventsource.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import '../../features/shopping_list/data/datasources/shopping_list_datasource_test.mocks.dart';
 import '../../fixtures/fixture_reader.dart';
 import 'shopping_list_bloc_test.mocks.dart';
 

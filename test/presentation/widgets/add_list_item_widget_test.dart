@@ -1,7 +1,5 @@
-import 'package:bite_buddy/core/constants.dart';
 import 'package:bite_buddy/features/shopping_list/domain/entities/shopping_list.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
-import 'package:bite_buddy/presentation/pages/home_screen.dart';
 import 'package:bite_buddy/presentation/widgets/add_list_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +93,7 @@ void main() {
 void setUpStreamAndStateSuccess(MockShoppingListBloc mockShoppingListBloc) {
   when(mockShoppingListBloc.stream).thenAnswer((realInvocation) =>
       Stream<ShoppingListState>.value(
-          ShoppingListLoaded(shoppingList: ShoppingList(items: []))));
+          ShoppingListLoaded(shoppingList: const ShoppingList(items: []))));
   when(mockShoppingListBloc.state).thenAnswer((realInvocation) =>
-      ShoppingListLoaded(shoppingList: ShoppingList(items: [])));
+      ShoppingListLoaded(shoppingList: const ShoppingList(items: [])));
 }

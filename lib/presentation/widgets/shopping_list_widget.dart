@@ -28,10 +28,13 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
     return Expanded(
       child: BlocBuilder<ShoppingListBloc, ShoppingListState>(
         builder: (context, state) {
-          _items =
-              BlocProvider.of<ShoppingListBloc>(context).shoppingList.items;
+          if (state is ShoppingListLoaded) {
+            _items = state.shoppingList.items;
+          }
+          // _items =
+          //     BlocProvider.of<ShoppingListBloc>(context).shoppingList.items;
 
-          bool _isLoading = state is ShoppingListLoading;
+          bool isLoading = state is ShoppingListLoading;
 
           return Stack(
             children: [
@@ -58,7 +61,7 @@ class _ShoppingListWidgetState extends State<ShoppingListWidget> {
                   //onUpdateShoppingList();
                 },
               ),
-              _isLoading
+              isLoading
                   ? Positioned.fill(
                       child: Container(
                       color: Colors.white.withOpacity(0.6),
