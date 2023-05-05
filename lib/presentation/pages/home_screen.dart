@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// Gets the shopping list on initialisation
+  /// Initialize the stream to the database
   void dispatchGetShoppingList() {
     BlocProvider.of<ShoppingListBloc>(context).add(StreamShoppingListEvent());
   }

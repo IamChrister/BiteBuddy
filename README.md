@@ -1,6 +1,8 @@
 # BiteBuddy
 BiteBuddy is a shopping list app focused on helping families coordinate their shopping lists. Our secondary goal is to encourage healthier and more sustainable consumption habits by offering alternative options with a lower carbon footprint.
 
+![Demo of Bite Buddy](demo/biteBuddy_demo.gif)
+
 ## Goal
 The primary goal of BiteBuddy is to provide a seamless and user-friendly experience for families to manage and coordinate their shopping lists. Additionally, we aim to encourage better consumption habits by offering healthier and lower carbon footprint alternatives by implementing an LLM-based recommendation system to recommend healthier products with a lower carbon footprint for the user (Currently unimplemented).  
 
@@ -51,3 +53,4 @@ flutter test integration_test/app_test.dart
 - Handling of streams in Bloc & testing them
 - Enhancing test coverage
 - Adding more features to improve user experience
+- Not tested on iOS but the project should not contain anything platform specific
