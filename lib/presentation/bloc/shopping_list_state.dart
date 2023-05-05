@@ -7,7 +7,7 @@ abstract class ShoppingListState extends Equatable {
   List<Object> get props => [];
 }
 
-/// Finished loading - This keeps the state of the shoppingList
+/// Emitted when the shopping list is updated
 class ShoppingListLoaded extends ShoppingListState {
   final ShoppingList shoppingList;
 

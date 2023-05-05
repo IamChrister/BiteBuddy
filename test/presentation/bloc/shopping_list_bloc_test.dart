@@ -128,9 +128,7 @@ void main() {
 
             bloc.add(StreamShoppingListEvent());
           },
-          expect: () =>
-              // The state emitted
-              [
+          expect: () => [
                 ShoppingListLoaded(shoppingList: const ShoppingList(items: []))
               ]);
 
@@ -153,9 +151,9 @@ void main() {
 
             bloc.add(StreamShoppingListEvent());
           },
-          expect: () =>
-              // The state emitted
-              [ShoppingListLoaded(shoppingList: expected["data"]!)]);
+          expect: () => [ShoppingListLoaded(shoppingList: expected["data"]!)]);
+
+      //TODO: Not needed right now but would be good to implement a 'patch' event also.
     });
 
     group('getShoppingList', () {

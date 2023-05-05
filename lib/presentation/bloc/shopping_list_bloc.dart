@@ -14,10 +14,10 @@ import 'package:bite_buddy/features/shopping_list/domain/usecases/update_shoppin
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eventsource/eventsource.dart';
-
 part 'shopping_list_event.dart';
 part 'shopping_list_state.dart';
 
+/// The main state & event handling of our app
 class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final GetShoppingListUsecase getShoppingList;
   final UpdateShoppingListUsecase updateShoppingList;
@@ -47,6 +47,9 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   ShoppingListState get initialState => ShoppingListInitial();
   ShoppingList get shoppingList => _shoppingList;
 
+  /// Handle events coming from the stream
+  ///
+  /// Does not emit a new state but adds events that handle this
   FutureOr<void> _onStreamShoppingListEvent(
       StreamShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     final EventSource source = await streamShoppingList();
@@ -62,10 +65,12 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
               shoppingList: const ShoppingList(items: [])));
         }
       }
-      //ShoppingList.
     });
   }
 
+  /// Handle what happens when an update to the shopping list is received from the database
+  ///
+  /// Emits [ShoppingListLoaded] state with the new shopping list
   Future<void> _onShoppingListLoadedFromStreamEvent(
       ShoppingListLoadedFromStreamEvent event,
       Emitter<ShoppingListState> emit) async {
@@ -73,6 +78,10 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     emit(ShoppingListLoaded(shoppingList: event.shoppingList));
   }
 
+  /// Handle getting the shopping list from the database
+  ///
+  /// Emits [ShoppingListLoading], [ShoppingListLoaded] on success
+  /// Emits [ShoppingListError] on failure
   Future<void> _onGetShoppingListEvent(
       GetShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     emit(ShoppingListLoading());
@@ -85,6 +94,10 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     });
   }
 
+  /// Handle deleting an item from the shopping list
+  ///
+  /// Emits [ShoppingListLoading], [ShoppingListLoaded] on success
+  /// Emits [ShoppingListError] on failure
   Future<void> _onDeleteItemFromShoppingListEvent(
       DeleteItemFromShoppingListEvent event,
       Emitter<ShoppingListState> emit) async {
@@ -107,9 +120,12 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     });
   }
 
+  /// Handle updating the database with the new shopping list state
+  ///
+  /// Emits [ShoppingListLoading], [ShoppingListLoaded] on success
+  /// Emits [ShoppingListError] on failure
   Future<void> _onUpdateShoppingListEvent(
       UpdateShoppingListEvent event, Emitter<ShoppingListState> emit) async {
-    // Actually probably should have a different effect since it's a bit different from the initial load maybe in the UI
     emit(ShoppingListLoading());
     final updateResult = await updateShoppingList(event.shoppingList);
 
@@ -121,7 +137,10 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     });
   }
 
-  /// Event that runs when an item is added to the shopping list
+  /// Handle adding a new item to the shopping list
+  ///
+  /// Emits [ShoppingListLoading], [ShoppingListLoaded] on success
+  /// Emits [ShoppingListError] on failure
   Future<void> _onAddItemToShoppingListEvent(
       AddItemToShoppingListEvent event, Emitter<ShoppingListState> emit) async {
     final result = addItemToShoppingList(_shoppingList, event.newItem);

@@ -8,14 +8,13 @@ import 'package:dartz/dartz.dart';
 class DeleteItemFromShoppingListUsecase {
   DeleteItemFromShoppingListUsecase();
 
+  /// Removes the item from the shopping list
+  ///
+  /// Returns [ItemNotFoundFailure] if item to be removed is not present in the shopping list
   Either<Failure, ShoppingList> call(ShoppingList shoppingList, ListItem item) {
-    // Convert item string to ListItem
-
-    // Cannot add to immutable list so we'll create a new one.
     List<ListItem> items = List<ListItem>.from(shoppingList.items);
 
     bool itemRemoved = items.remove(item);
-
     if (itemRemoved) {
       return Right(ShoppingList(items: items));
     } else {

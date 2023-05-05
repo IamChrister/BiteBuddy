@@ -38,5 +38,7 @@ void main() {
       verify(mockShoppingListRepository.updateShoppingList(expected));
       verifyNoMoreInteractions(mockShoppingListRepository);
     });
+
+    //TODO: Add a test for failure case
   });
 }

@@ -2,6 +2,10 @@ import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// A widget that lets the user type in the title of a new item & add it to the shopping list
+/// Has a [TextField] and an [IconButton]
+///
+/// Also displays any errors that may occur
 class AddListItemWidget extends StatefulWidget {
   const AddListItemWidget({super.key});
 
@@ -27,7 +31,6 @@ class _AddListItemWidgetState extends State<AddListItemWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Handle the error messages here if needed
         BlocBuilder<ShoppingListBloc, ShoppingListState>(
             builder: (context, state) {
           if (state is ShoppingListError) {

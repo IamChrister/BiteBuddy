@@ -37,5 +37,7 @@ void main() {
       verify(shoppingListRepository.getShoppingList());
       verifyNoMoreInteractions(shoppingListRepository);
     });
+
+    //TODO: Add a test for Failure
   });
 }

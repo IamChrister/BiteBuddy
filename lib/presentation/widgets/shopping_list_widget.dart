@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bite_buddy/presentation/bloc/shopping_list_bloc.dart';
 
+/// A widget responsible for displaying all the ListItems in a ShoppingList
 class ShoppingListWidget extends StatefulWidget {
   const ShoppingListWidget({Key? key}) : super(key: key);
 

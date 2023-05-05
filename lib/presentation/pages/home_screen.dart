@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  /// Clear the entire list
   void _clearShoppingList() {
     if (BlocProvider.of<ShoppingListBloc>(context).state
         is! ShoppingListLoading) {
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  /// Gets the shopping list on initialisation
   void dispatchGetShoppingList() {
     BlocProvider.of<ShoppingListBloc>(context).add(StreamShoppingListEvent());
   }

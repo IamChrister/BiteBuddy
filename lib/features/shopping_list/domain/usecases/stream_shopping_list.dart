@@ -8,10 +8,10 @@ class StreamShoppingListUsecase {
 
   StreamShoppingListUsecase({required this.repository});
 
+  // Gets the stream to the database
   Future<EventSource> call() async {
     EventSource stream = await repository.streamShoppingList();
 
     return stream;
-    //   return stream;
   }
 }

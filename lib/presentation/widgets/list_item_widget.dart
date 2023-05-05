@@ -1,6 +1,7 @@
 import 'package:bite_buddy/features/shopping_list/domain/entities/list_item.dart';
 import 'package:flutter/material.dart';
 
+/// A single list item
 class ListItemWidget extends StatelessWidget {
   final ListItem item;
   final Function(int) onDismissed;

@@ -44,7 +44,8 @@ void main() {
   const tResultingShoppingList = ShoppingList(items: [tAddedItem]);
 
   group('integrationTests', () {
-    testWidgets('description', (tester) async {
+    testWidgets('Should display the new item after it has been added',
+        (tester) async {
       //Arrange
       final shoppingListBloc = ShoppingListBloc(
           addItemToShoppingList: mockAddListItemToShoppingListUsecase,

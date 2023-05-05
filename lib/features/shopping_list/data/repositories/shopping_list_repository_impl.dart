@@ -13,6 +13,11 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
 
   ShoppingListRepositoryImpl({required this.shoppingListDatasource});
 
+  /// Get the shopping list from the database.
+  /// Will return an empty shopping list if no data is found
+  /// For remaining up to date on the database state it is recommended to use streamShoppingList() instead.
+  ///
+  /// Returns a [ServerFailure] for any errors
   @override
   Future<Either<Failure, ShoppingList>> getShoppingList() async {
     try {
@@ -22,6 +27,10 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
     }
   }
 
+  /// Used to update the state of the shopping list in the database.
+  /// Can be used for any type of update including deletion, adding items, clearing the list etc.
+  ///
+  /// Returns a [ServerFailure] for any errors
   @override
   Future<Either<Failure, ShoppingList>> updateShoppingList(
       ShoppingList shoppingList) async {
@@ -33,6 +42,7 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
     }
   }
 
+  /// Used to get a stream from the database that sends an event every time the database experiences a change from another device.
   @override
   Future<EventSource> streamShoppingList() async {
     return await shoppingListDatasource.streamShoppingList();

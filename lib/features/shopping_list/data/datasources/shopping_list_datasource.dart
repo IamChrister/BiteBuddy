@@ -6,14 +6,15 @@ import 'package:http/http.dart' as http;
 import '../models/shopping_list_model.dart';
 
 abstract class ShoppingListDatasource {
-  /// Calls the Firebase Firestore/Realtime database endpoint
+  /// Calls the Firebase Realtime database endpoint
   ///
   /// Throws a [ServerException] for all error codes
   Future<ShoppingListModel> getShoppingList();
 
+  /// Gets the stream to Firebase Realtime database endpoint
   Future<EventSource> streamShoppingList();
 
-  /// Calls the Firebase Firestore/Realtime database endpoint
+  /// Calls the Firebase Realtime database endpoint
   ///
   /// Throws a [ServerException] for all error codes
   Future<ShoppingListModel> updateShoppingList(ShoppingListModel shoppingList);

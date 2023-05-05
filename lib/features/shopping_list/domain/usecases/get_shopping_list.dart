@@ -10,6 +10,7 @@ class GetShoppingListUsecase {
 
   GetShoppingListUsecase({required this.repository});
 
+  /// Gets the state of the shopping list from the database
   Future<Either<Failure, ShoppingList>> call() async {
     return await repository.getShoppingList();
   }

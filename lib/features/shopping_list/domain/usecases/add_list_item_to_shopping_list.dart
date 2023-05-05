@@ -11,12 +11,13 @@ class AddListItemToShoppingListUsecase {
 
   AddListItemToShoppingListUsecase({required this.inputConverter});
 
+  /// Adds an item to the shopping list and returns the updated [ShoppingList] object
+  ///
+  /// Returns [InvalidInputFailure] if name is not suitable
   Either<Failure, ShoppingList> call(
       ShoppingList shoppingList, String itemString) {
-    // Convert item string to ListItem
     final result = inputConverter.stringToListItem(itemString);
     return result.fold((failure) => Left(InvalidInputFailure()), (listItem) {
-      // Cannot add to immutable list so we'll create a new one.
       List<ListItem> items = List.from(shoppingList.items);
       items.add(listItem);
 

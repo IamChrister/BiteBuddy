@@ -9,4 +9,6 @@ void main() {
   test('should be a subclass of ListItem entity', () async {
     expect(tListItemModel, isA<ListItem>());
   });
+
+  //TODO: Needs tests for toJson, fromJson & toggleCollected methods
 }
